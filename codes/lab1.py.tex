@@ -1,0 +1,803 @@
+\ttfamily
+\shorthandoff{"}
+\noindent
+\hlstd{}\hllin{\ 1\ }\hlslc{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}\\
+\hllin{\ 2\ }\hlstd{}\hlkwa{from\ }\hlstd{IPython}\hlopt{.}\hlstd{display\ }\hlkwa{import\ }\hlstd{display}\hlopt{,\ }\hlstd{Latex}\hlopt{,\ }\hlstd{Math}\hlopt{,\ }\hlstd{Markdown}\\
+\hllin{\ 3\ }\hlkwa{import\ }\hlstd{numpy\ }\hlkwa{as\ }\hlstd{np\\
+\hllin{\ 4\ }np}\hlopt{.}\hlstd{}\hlkwd{seterr}\hlstd{}\hlopt{(}\hlstd{divide}\hlopt{=}\hlstd{}\hlstr{'ignore'}\hlstd{}\hlopt{,\ }\hlstd{invalid}\hlopt{=}\hlstd{}\hlstr{'ignore'}\hlstd{}\hlopt{)}\\
+\hllin{\ 5\ }\hlstd{}\hlkwa{import\ }\hlstd{pandas\ }\hlkwa{as\ }\hlstd{pd}\\
+\hllin{\ 6\ }\hlkwa{import\ }\hlstd{math}\\
+\hllin{\ 7\ }\hlkwa{import\ }\hlstd{copy}\\
+\hllin{\ 8\ }\hlkwa{from\ }\hlstd{ipy\textunderscore table\ }\hlkwa{import\ }\hlstd{make\textunderscore table}\hlopt{,\ }\hlstd{set\textunderscore row\textunderscore style}\\
+\hllin{\ 9\ }\hlkwa{import\ }\hlstd{re}\\
+\hllin{10\ }\hlkwa{import\ }\hlstd{random}\\
+\hllin{11\ }\hlslc{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}\\
+\hllin{12\ }\hlstd{\\
+\hllin{13\ }ROUND\textunderscore ACCURACY\ }\hlopt{=\ }\hlstd{}\hlnum{4}\\
+\hllin{14\ }\hlstd{MAX\textunderscore ITERATIONS\ }\hlopt{=\ }\hlstd{}\hlnum{11}\\
+\hllin{15\ }\hlstd{REPORT\textunderscore PATH\ }\hlopt{=\ }\hlstd{}\hlstr{'report/solution.tex'}\hlstd{}\\
+\hllin{16\ }\\
+\hllin{17\ }\hlslc{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}\\
+\hllin{18\ }\hlstd{\\
+\hllin{19\ }IS\textunderscore OUTPUT\ }\hlopt{=\ }\hlstd{}\hlkwa{True}\\
+\hllin{20\ }\hlstd{\\
+\hllin{21\ }report\textunderscore output\ }\hlopt{=\ }\hlstd{}\hlkwb{open}\hlstd{}\hlopt{(}\hlstd{REPORT\textunderscore PATH}\hlopt{,\ }\hlstd{}\hlstr{'w'}\hlstd{}\hlopt{)}\\
+\hllin{22\ }\hlstd{}\hlkwa{def\ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{s}\hlopt{,}\hlstd{debug}\hlopt{=}\hlstd{}\hlkwa{False}\hlstd{}\hlopt{):}\\
+\hllin{23\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{IS\textunderscore OUTPUT\ }\hlkwa{or\ }\hlstd{debug}\hlopt{:}\\
+\hllin{24\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{report\textunderscore output}\hlopt{.}\hlstd{}\hlkwd{write}\hlstd{}\hlopt{(}\hlstd{s}\hlopt{.}\hlstd{}\hlkwd{replace}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'\&nbsp'}\hlstd{}\hlopt{,\ }\hlstd{}\hlstr{'\ '}\hlstd{}\hlopt{)+}\hlstd{}\hlstr{'}\hlesc{$\backslash$n$\backslash$n}\hlstr{'}\hlstd{}\hlopt{)}\\
+\hllin{25\ }\hlstd{}\\
+\hllin{26\ }\hlkwa{def\ }\hlstd{}\hlkwd{writetbl}\hlstd{}\hlopt{(}\hlstd{t}\hlopt{,\ }\hlstd{caption}\hlopt{=}\hlstd{}\hlstr{''}\hlstd{}\hlopt{,\ }\hlstd{debug}\hlopt{=}\hlstd{}\hlkwa{False}\hlstd{}\hlopt{):}\\
+\hllin{27\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{IS\textunderscore OUTPUT\ }\hlkwa{or\ }\hlstd{debug}\hlopt{:}\\
+\hllin{28\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{=}\hlstd{\ \ }\hlopt{}\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{begin\usebox{\hlboxopenbrace}table\usebox{\hlboxclosebrace}{[}H{]}}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{29\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$t$\backslash$$\backslash$}\hlstr{centering}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{30\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$t$\backslash$$\backslash$}\hlstr{normalsize}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{31\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$t$\backslash$$\backslash$}\hlstr{caption\usebox{\hlboxopenbrace}'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{caption}\hlopt{)\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{32\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$t$\backslash$$\backslash$}\hlstr{label\usebox{\hlboxopenbrace}tbl:'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{printed\textunderscore table\textunderscore no}\hlopt{)\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{33\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\#\ printed\textunderscore table\textunderscore no\ +=\ 1}\\
+\hllin{34\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$t$\backslash$$\backslash$}\hlstr{begin\usebox{\hlboxopenbrace}tabular\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}\textbar '}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlstr{'c\textbar '}\hlstd{}\hlopt{{*}}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{t}\hlopt{{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]})\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{35\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$t$\backslash$t$\backslash$$\backslash$}\hlstr{hline}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{36\ }\\
+\hllin{37\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{row\ }\hlkwa{in\ }\hlstd{t}\hlopt{:}\\
+\hllin{38\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$t$\backslash$t}\hlstr{'}\hlstd{\\
+\hllin{39\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{item\ }\hlkwa{in\ }\hlstd{row}\hlopt{:}\\
+\hllin{40\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{item}\hlopt{)\ +\ }\hlstd{}\hlstr{'\&'}\hlstd{\\
+\hllin{41\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{=\ }\hlstd{output}\hlopt{{[}:{-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\ +\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$$\backslash$$\backslash$\ $\backslash$$\backslash$}\hlstr{hline}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{42\ }\\
+\hllin{43\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$n$\backslash$$\backslash$}\hlstr{end\usebox{\hlboxopenbrace}tabular\usebox{\hlboxclosebrace}}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{44\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$n$\backslash$$\backslash$}\hlstr{end\usebox{\hlboxopenbrace}table\usebox{\hlboxclosebrace}'}\hlstd{\\
+\hllin{45\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{output}\hlopt{,}\hlstd{debug}\hlopt{)}\\
+\hllin{46\ }\hlstd{}\\
+\hllin{47\ }\hlkwa{def\ }\hlstd{}\hlkwd{writeeq}\hlstd{}\hlopt{(}\hlstd{eq}\hlopt{,}\hlstd{num}\hlopt{=}\hlstd{}\hlkwa{False}\hlstd{}\hlopt{,}\hlstd{debug}\hlopt{=}\hlstd{}\hlkwa{False}\hlstd{}\hlopt{):}\\
+\hllin{48\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{IS\textunderscore OUTPUT\ }\hlkwa{or\ }\hlstd{debug}\hlopt{:}\\
+\hllin{49\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{vspace\usebox{\hlboxopenbrace}{-}}\hlesc{$\backslash$$\backslash$}\hlstr{baselineskip\usebox{\hlboxclosebrace}'}\hlstd{\\
+\hllin{50\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{begin\usebox{\hlboxopenbrace}align\usebox{\hlboxclosebrace}}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\ }\hlkwa{if\ }\hlstd{num\ }\hlkwa{else\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{begin\usebox{\hlboxopenbrace}align{*}\usebox{\hlboxclosebrace}}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{51\ }\\
+\hllin{52\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{eq\\
+\hllin{53\ }\\
+\hllin{54\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$n$\backslash$$\backslash$}\hlstr{end\usebox{\hlboxopenbrace}align\usebox{\hlboxclosebrace}'}\hlstd{\ }\hlkwa{if\ }\hlstd{num\ }\hlkwa{else\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$n$\backslash$$\backslash$}\hlstr{end\usebox{\hlboxopenbrace}align{*}\usebox{\hlboxclosebrace}'}\hlstd{\\
+\hllin{55\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{output}\hlopt{,}\hlstd{debug}\hlopt{)}\\
+\hllin{56\ }\hlstd{}\hlslc{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}\\
+\hllin{57\ }\hlstd{\\
+\hllin{58\ }printed\textunderscore table\textunderscore no\ }\hlopt{=\ }\hlstd{}\hlnum{1}\\
+\hllin{59\ }\hlstd{}\\
+\hllin{60\ }\hlslc{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}\\
+\hllin{61\ }\hlstd{\\
+\hllin{62\ }tons\ }\hlopt{=\ {[}}\\
+\hllin{63\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlopt{{[}}\hlstd{}\hlnum{25}\hlstd{}\hlopt{,}\hlstd{}\hlnum{20}\hlstd{}\hlopt{,}\hlstd{}\hlnum{50}\hlstd{}\hlopt{{]},}\\
+\hllin{64\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlopt{{[}}\hlstd{}\hlnum{15}\hlstd{}\hlopt{,}\hlstd{}\hlnum{10}\hlstd{}\hlopt{,}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]},}\\
+\hllin{65\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlopt{{[}}\hlstd{}\hlnum{10}\hlstd{}\hlopt{,}\hlstd{}\hlnum{40}\hlstd{}\hlopt{,}\hlstd{}\hlnum{8}\hlstd{}\hlopt{{]},}\\
+\hllin{66\ }\hlstd{}\hlopt{{]}}\\
+\hllin{67\ }\hlstd{cost\ }\hlopt{=\ {[}}\\
+\hllin{68\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlopt{{[}}\hlstd{}\hlnum{15}\hlstd{}\hlopt{,}\hlstd{}\hlnum{10}\hlstd{}\hlopt{,}\hlstd{}\hlnum{30}\hlstd{}\hlopt{{]},}\\
+\hllin{69\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlopt{{[}}\hlstd{}\hlnum{25}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{6}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]},}\\
+\hllin{70\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlopt{{[}}\hlstd{}\hlnum{30}\hlstd{}\hlopt{,\ }\hlstd{}\hlnum{5}\hlstd{}\hlopt{,}\hlstd{}\hlnum{10}\hlstd{}\hlopt{{]},}\\
+\hllin{71\ }\hlstd{}\hlopt{{]}}\\
+\hllin{72\ }\hlstd{min\textunderscore transit\ }\hlopt{=\ {[}}\\
+\hllin{73\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlnum{500}\hlstd{}\hlopt{,}\\
+\hllin{74\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlnum{200}\hlstd{}\hlopt{,}\\
+\hllin{75\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlnum{100}\\
+\hllin{76\ }\hlstd{}\hlopt{{]}}\\
+\hllin{77\ }\hlstd{vehicles\ }\hlopt{=\ {[}}\hlstd{}\hlnum{55}\hlstd{}\hlopt{,}\hlstd{}\hlnum{95}\hlstd{}\hlopt{,}\hlstd{}\hlnum{30}\hlstd{}\hlopt{{]}}\\
+\hllin{78\ }\hlstd{}\\
+\hllin{79\ }\hlslc{\#\ test\ set\ source\ data}\\
+\hllin{80\ }\hlstd{}\hlslc{\#\ tons\ =\ {[}}\\
+\hllin{81\ }\hlstd{}\hlslc{\#}\hlstd{\ \ \ }\hlslc{{[}25,20,50,50{]},}\\
+\hllin{82\ }\hlstd{}\hlslc{\#}\hlstd{\ \ \ }\hlslc{{[}20,12,\ 0,45{]},}\\
+\hllin{83\ }\hlstd{}\hlslc{\#}\hlstd{\ \ \ }\hlslc{{[}15,10,\ 0,40{]},}\\
+\hllin{84\ }\hlstd{}\hlslc{\#}\hlstd{\ \ \ }\hlslc{{[}10,40,\ 8,25{]},}\\
+\hllin{85\ }\hlstd{}\hlslc{\#\ {]}}\\
+\hllin{86\ }\hlstd{}\hlslc{\#\ cost\ =\ {[}}\\
+\hllin{87\ }\hlstd{}\hlslc{\#}\hlstd{\ \ \ }\hlslc{{[}15,10,30,25{]},}\\
+\hllin{88\ }\hlstd{}\hlslc{\#}\hlstd{\ \ \ }\hlslc{{[}20,\ 8,\ 0,30{]},}\\
+\hllin{89\ }\hlstd{}\hlslc{\#}\hlstd{\ \ \ }\hlslc{{[}25,\ 6,\ 0,15{]},}\\
+\hllin{90\ }\hlstd{}\hlslc{\#}\hlstd{\ \ \ }\hlslc{{[}30,\ 5,10,45{]},}\\
+\hllin{91\ }\hlstd{}\hlslc{\#\ {]}}\\
+\hllin{92\ }\hlstd{}\hlslc{\#\ min\textunderscore transit\ =\ {[}}\\
+\hllin{93\ }\hlstd{}\hlslc{\#}\hlstd{\ \ \ }\hlslc{500,}\\
+\hllin{94\ }\hlstd{}\hlslc{\#}\hlstd{\ \ \ }\hlslc{200,}\\
+\hllin{95\ }\hlstd{}\hlslc{\#}\hlstd{\ \ \ }\hlslc{200,}\\
+\hllin{96\ }\hlstd{}\hlslc{\#}\hlstd{\ \ \ }\hlslc{100}\\
+\hllin{97\ }\hlstd{}\hlslc{\#\ {]}}\\
+\hllin{98\ }\hlstd{}\hlslc{\#\ vehicles\ =\ {[}55,95,30,45{]}}\\
+\hllin{99\ }\hlstd{\\
+\hllin{100\ }table\textunderscore 1\ }\hlopt{=\ {[}{]}}\\
+\hllin{101\ }\hlstd{table\textunderscore 1}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{({[}{]})}\\
+\hllin{102\ }\hlstd{table\textunderscore 1}\hlopt{{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'№\ линии}\hlesc{$\backslash$$\backslash$}\hlstr{textbackslash\ №\ судна'}\hlstd{}\hlopt{)}\\
+\hllin{103\ }\hlstd{}\hlkwa{for\ }\hlstd{i\ }\hlkwa{in\ }\hlstd{}\hlkwb{range}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{vehicles}\hlopt{)):}\\
+\hllin{104\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{table\textunderscore 1}\hlopt{{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\hlstd{i}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{)}\\
+\hllin{105\ }\hlstd{table\textunderscore 1}\hlopt{{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'Минимальный\ объем\ }\Righttorque\\
+\hllin{106\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{перевозок'}\hlstd{}\hlopt{)}\\
+\hllin{107\ }\hlstd{}\\
+\hllin{108\ }\hlkwa{for\ }\hlstd{index}\hlopt{,}\hlstd{value\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{):}\\
+\hllin{109\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{table\textunderscore 1}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{({[}{]})}\\
+\hllin{110\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{table\textunderscore 1}\hlopt{{[}}\hlstd{index}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\hlstd{index}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{)}\\
+\hllin{111\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{idx}\hlopt{,}\hlstd{item\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{value}\hlopt{):}\\
+\hllin{112\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{table\textunderscore 1}\hlopt{{[}}\hlstd{index}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{item}\hlopt{)+}\hlstd{}\hlstr{'/'}\hlstd{}\hlopt{+}\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{cost}\hlopt{{[}}\hlstd{index}\hlopt{{]}{[}}\hlstd{idx}\hlopt{{]}))}\\
+\hllin{113\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{table\textunderscore 1}\hlopt{{[}}\hlstd{index}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\hlstd{min\textunderscore transit}\hlopt{{[}}\hlstd{index}\hlopt{{]})}\\
+\hllin{114\ }\hlstd{\\
+\hllin{115\ }table\textunderscore 1}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{({[}{]})}\\
+\hllin{116\ }\hlstd{table\textunderscore 1}\hlopt{{[}{-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'Кол{-}во\ кораблей'}\hlstd{}\hlopt{)}\\
+\hllin{117\ }\hlstd{}\\
+\hllin{118\ }\hlkwa{for\ }\hlstd{item\ }\hlkwa{in\ }\hlstd{vehicles}\hlopt{:}\\
+\hllin{119\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{table\textunderscore 1}\hlopt{{[}{-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\hlstd{item}\hlopt{)}\\
+\hllin{120\ }\hlstd{table\textunderscore 1}\hlopt{{[}{-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\hlstd{}\hlstr{''}\hlstd{}\hlopt{)}\\
+\hllin{121\ }\hlstd{}\\
+\hllin{122\ }\hlkwd{writetbl}\hlstd{}\hlopt{(}\hlstd{table\textunderscore 1}\hlopt{,\ }\hlstd{}\hlstr{'Исходные\ данные'}\hlstd{}\hlopt{)}\\
+\hllin{123\ }\hlstd{}\\
+\hllin{124\ }\hlslc{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}\\
+\hllin{125\ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{section\usebox{\hlboxopenbrace}Математическая\ модель\usebox{\hlboxclosebrace}'}\hlstd{}\hlopt{)}\\
+\hllin{126\ }\hlstd{}\\
+\hllin{127\ }\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'''}\\
+\hllin{128\ }\hlstr{Обозначим\ через\ \$x\textunderscore \usebox{\hlboxopenbrace}ij\usebox{\hlboxclosebrace}\$\ {-}{-}{-}\ количество\ }\Righttorque\\
+\hllin{129\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{судов,\ перевозимого\ }\Righttorque\\
+\hllin{130\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{по\ линиям\ перевозки,}\Righttorque\\
+\hllin{131\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{\$c\textunderscore \usebox{\hlboxopenbrace}i,j\usebox{\hlboxclosebrace}\$\ {-}{-}{-}\ стоимость\ }\Righttorque\\
+\hllin{132\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{перевозки.}\\
+\hllin{133\ }\hlstr{}\\
+\hllin{134\ }\hlstr{Целевая\ функция\ {-}{-}{-}\ \$$\backslash$min\ F(x\textunderscore \usebox{\hlboxopenbrace}ij\usebox{\hlboxclosebrace})\ =\ $\backslash$min$\backslash$sum\textunderscore \usebox{\hlboxopenbrace}i=1\usebox{\hlboxclosebrace}\textasciicircum \usebox{\hlboxopenbrace}m\usebox{\hlboxclosebrace}}\Righttorque\\
+\hllin{135\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{$\backslash$sum\textunderscore \usebox{\hlboxopenbrace}j=1\usebox{\hlboxclosebrace}\textasciicircum \usebox{\hlboxopenbrace}n\usebox{\hlboxclosebrace}\ c\textunderscore \usebox{\hlboxopenbrace}ij\usebox{\hlboxclosebrace}\ $\backslash$cdot\ }\Righttorque\\
+\hllin{136\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{x\textunderscore \usebox{\hlboxopenbrace}ij\usebox{\hlboxclosebrace}\$.}\\
+\hllin{137\ }\hlstr{}\\
+\hllin{138\ }\hlstr{Целевая\ функция\ отражает\ минимальные\ }\Righttorque\\
+\hllin{139\ }\hlstr{транспортные\ издержки,\ при\ которых\ }\Righttorque\\
+\hllin{140\ }\hlstr{запросы\ всех\ потребителей\ }\Righttorque\\
+\hllin{141\ }\hlstr{удовлетворены.}\\
+\hllin{142\ }\hlstr{}\\
+\hllin{143\ }\hlstr{Требуется\ определить\ множество\ }\Righttorque\\
+\hllin{144\ }\hlstr{переменных\ \$х\textunderscore \usebox{\hlboxopenbrace}ij\usebox{\hlboxclosebrace}\ }\hlesc{$\backslash$$\backslash$}\hlstr{geqslant\ 0\$,\ }\Righttorque\\
+\hllin{145\ }\hlstr{удовлетворяющих\ следующим\ условия:}\\
+\hllin{146\ }\hlstr{}\\
+\hllin{147\ }\hlstr{\$\$$\backslash$sum\textunderscore \usebox{\hlboxopenbrace}j=1\usebox{\hlboxclosebrace}\textasciicircum \usebox{\hlboxopenbrace}n\usebox{\hlboxclosebrace}\ x\textunderscore \usebox{\hlboxopenbrace}ij\usebox{\hlboxclosebrace}\ $\backslash$cdot\ a\textunderscore \usebox{\hlboxopenbrace}ij\usebox{\hlboxclosebrace}\ $\backslash$geqslant\ a\textunderscore i,\ }\hlesc{$\backslash$$\backslash$}\hlstr{text\usebox{\hlboxopenbrace},\ где\ \usebox{\hlboxclosebrace}\ (}\Righttorque\\
+\hllin{148\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ }\hlstr{i\ =\ 1,\ 2,\ $\backslash$dots\ ,\ m)\$\$}\\
+\hllin{149\ }\hlstr{}\\
+\hllin{150\ }\hlstr{\$\$$\backslash$sum\textunderscore \usebox{\hlboxopenbrace}i=1\usebox{\hlboxclosebrace}\textasciicircum \usebox{\hlboxopenbrace}m\usebox{\hlboxclosebrace}\ x\textunderscore \usebox{\hlboxopenbrace}ij\usebox{\hlboxclosebrace}\ =\ N\textunderscore j,\ }\hlesc{$\backslash$$\backslash$}\hlstr{text\usebox{\hlboxopenbrace},\ где\ \usebox{\hlboxclosebrace}\ (i\ =\ 1,\ 2,\ $\backslash$dots\ ,\ m)}\Righttorque\\
+\hllin{151\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ }\hlstr{\$\$}\\
+\hllin{152\ }\hlstr{}\\
+\hllin{153\ }\hlstr{В\ ограничениях\ \$a\textunderscore i\$\ {-}{-}{-}\ минимальный\ }\Righttorque\\
+\hllin{154\ }\hlstr{объем\ перевозок\ на\ линии\ \$i\$;\ \$N\textunderscore j\$\ {-}{-}{-}\ }\Righttorque\\
+\hllin{155\ }\hlstr{количество\ судов\ вида\ \$j\$.}\\
+\hllin{156\ }\hlstr{}\\
+\hllin{157\ }\hlstr{}\hlesc{$\backslash$$\backslash$}\hlstr{subsection\usebox{\hlboxopenbrace}Индивидуальное\ задание\usebox{\hlboxclosebrace}}\\
+\hllin{158\ }\hlstr{}\\
+\hllin{159\ }\hlstr{Обозначим\ через\ \$x\textunderscore \usebox{\hlboxopenbrace}ij\usebox{\hlboxclosebrace}\$\ число\ судов\ типа\ }\Righttorque\\
+\hllin{160\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{\$j\$\ \$(j\ =\ 1,2,3)\$,\ которое\ }\Righttorque\\
+\hllin{161\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{планируется\ }\Righttorque\\
+\hllin{162\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{закрепить\ за\ }\Righttorque\\
+\hllin{163\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{регулярной\ линией\ \$i\ }\Righttorque\\
+\hllin{164\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{(i\ =\ 1,2,3)\$.}\\
+\hllin{165\ }\hlstr{}\\
+\hllin{166\ }\hlstr{С\ учетом\ введенных\ обозначений\ }\Righttorque\\
+\hllin{167\ }\hlstr{математическая\ модель\ задачи:}\\
+\hllin{168\ }\hlstr{}\\
+\hllin{169\ }\hlstr{Целевая\ функция:}\\
+\hllin{170\ }\hlstr{'''}\hlstd{}\hlopt{)}\\
+\hllin{171\ }\hlstd{\\
+\hllin{172\ }math\textunderscore model\ }\hlopt{=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{min\ Z\textunderscore \usebox{\hlboxopenbrace}x\textunderscore \usebox{\hlboxopenbrace}ij\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}\ =\ }\hlesc{$\backslash$$\backslash$}\hlstr{min\textunderscore \usebox{\hlboxopenbrace}x\textunderscore \usebox{\hlboxopenbrace}ij\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}\ }\hlesc{$\backslash$$\backslash$}\hlstr{left(\ }\hlesc{$\backslash$$\backslash$}\hlstr{right.'}\hlstd{}\\
+\hllin{173\ }\hlkwa{for\ }\hlstd{row}\hlopt{,}\hlstd{value\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{cost}\hlopt{):}\\
+\hllin{174\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{col}\hlopt{,}\hlstd{value\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{value}\hlopt{):}\\
+\hllin{175\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{math\textunderscore model\ }\hlopt{+=\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{value}\hlopt{)+}\hlstd{}\hlstr{'x\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{}\hlopt{+}\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{row}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{)+}\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{col}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{)+}\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}+'}\hlstd{\\
+\hllin{176\ }}\hlstd{\ \ \ \ }\hlstd{math\textunderscore model\ }\hlopt{+=\ }\hlstd{}\hlstr{'\ }\hlesc{$\backslash$$\backslash$$\backslash$$\backslash$$\backslash$n$\backslash$t}\hlstr{'}\hlstd{\\
+\hllin{177\ }math\textunderscore model\ }\hlopt{=\ }\hlstd{math\textunderscore model}\hlopt{{[}:{-}}\hlstd{}\hlnum{6}\hlstd{}\hlopt{{]}\ +\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{left.\ }\hlesc{$\backslash$$\backslash$}\hlstr{right)'}\hlstd{}\\
+\hllin{178\ }\\
+\hllin{179\ }\hlkwd{writeeq}\hlstd{}\hlopt{(}\hlstd{math\textunderscore model}\hlopt{)}\\
+\hllin{180\ }\hlstd{}\\
+\hllin{181\ }\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{',\ при\ ограничениях:'}\hlstd{}\hlopt{)}\\
+\hllin{182\ }\hlstd{\\
+\hllin{183\ }restrictions\ }\hlopt{=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{begin\usebox{\hlboxopenbrace}cases\usebox{\hlboxclosebrace}'}\hlstd{}\\
+\hllin{184\ }\\
+\hllin{185\ }\hlkwa{for\ }\hlstd{row}\hlopt{,\ }\hlstd{value\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{):}\\
+\hllin{186\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{col}\hlopt{,\ }\hlstd{value\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{value}\hlopt{):}\\
+\hllin{187\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{restrictions\ }\hlopt{+=\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{value}\hlopt{)\ +\ }\hlstd{}\hlstr{'x\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{row}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{)\ +\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{col}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{)\ +\ }\Righttorque\\
+\hllin{188\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\ +'}\hlstd{\\
+\hllin{189\ }}\hlstd{\ \ \ \ }\hlstd{restrictions\ }\hlopt{=\ }\hlstd{restrictions}\hlopt{{[}:{-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}}\\
+\hllin{190\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{restrictions\ }\hlopt{+=\ }\hlstd{}\hlstr{'\&$\backslash$geqslant\ '}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{min\textunderscore transit}\hlopt{{[}}\hlstd{row}\hlopt{{]})}\\
+\hllin{191\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{restrictions\ }\hlopt{+=\ }\hlstd{}\hlstr{'\ }\hlesc{$\backslash$$\backslash$$\backslash$$\backslash$\ $\backslash$n$\backslash$t$\backslash$t}\hlstr{'}\hlstd{}\\
+\hllin{192\ }\\
+\hllin{193\ }\hlkwa{for\ }\hlstd{row}\hlopt{,\ }\hlstd{value\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{):}\\
+\hllin{194\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{col}\hlopt{,\ }\hlstd{value\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{value}\hlopt{):}\\
+\hllin{195\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{restrictions\ }\hlopt{+=\ }\hlstd{}\hlstr{'x\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{col}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{)\ +\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{row}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{)\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\ +'}\hlstd{\\
+\hllin{196\ }}\hlstd{\ \ \ \ }\hlstd{restrictions\ }\hlopt{=\ }\hlstd{restrictions}\hlopt{{[}:{-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}}\\
+\hllin{197\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{restrictions\ }\hlopt{+=\ }\hlstd{}\hlstr{'\&=\ '}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{vehicles}\hlopt{{[}}\hlstd{row}\hlopt{{]})}\\
+\hllin{198\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{restrictions\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$$\backslash$$\backslash$\ $\backslash$n$\backslash$t$\backslash$t}\hlstr{'}\hlstd{\\
+\hllin{199\ }\\
+\hllin{200\ }restrictions\ }\hlopt{+=\ }\hlstd{}\hlstr{'x\textunderscore \usebox{\hlboxopenbrace}ij\usebox{\hlboxclosebrace}\ $\backslash$geqslant\ 0,\ (i=1(1)'}\hlstd{}\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{))\ +}\hlstd{}\hlstr{'),\ (}\Righttorque\\
+\hllin{201\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{j=1(1)'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}))\ +\ }\hlstd{}\hlstr{')'}\hlstd{\\
+\hllin{202\ }restrictions\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$n$\backslash$t}\hlstr{$\backslash$end\usebox{\hlboxopenbrace}cases\usebox{\hlboxclosebrace}'}\hlstd{}\\
+\hllin{203\ }\\
+\hllin{204\ }\hlkwd{writeeq}\hlstd{}\hlopt{(}\hlstd{restrictions}\hlopt{)}\\
+\hllin{205\ }\hlstd{}\\
+\hllin{206\ }\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'''}\\
+\hllin{207\ }\hlstr{Обратим\ внимание,\ что\ в\ целевой\ }\Righttorque\\
+\hllin{208\ }\hlstr{функции\ коэффициент\ при\ переменной\ }\Righttorque\\
+\hllin{209\ }\hlstr{равен\ 1000,}\\
+\hllin{210\ }\hlstr{что\ значительно\ больше\ любого\ из\ }\Righttorque\\
+\hllin{211\ }\hlstr{остальных\ коэффициентов\ целевой\ }\Righttorque\\
+\hllin{212\ }\hlstr{функции.}\\
+\hllin{213\ }\hlstr{Тем\ самым\ использование\ судов\ }\Righttorque\\
+\hllin{214\ }\hlstr{третьего\ типа\ на\ второй\ регулярной\ }\Righttorque\\
+\hllin{215\ }\hlstr{линии\ \dq{}заблокировано\dq{},}\\
+\hllin{216\ }\hlstr{так\ как\ при\ \$x\textunderscore \usebox{\hlboxopenbrace}32\usebox{\hlboxclosebrace}\ }\hlesc{$\backslash$$\backslash$}\hlstr{neq\ 0\$\ значение\ целевой\ }\Righttorque\\
+\hllin{217\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{функции\ резко\ }\Righttorque\\
+\hllin{218\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{возрастает,\ и\ алгоритм,}\\
+\hllin{219\ }\hlstr{сформированный\ на\ основе\ метода\ }\Righttorque\\
+\hllin{220\ }\hlstr{симплекс{-}таблиц,\ выведет\ переменную\ \$x\textunderscore \usebox{\hlboxopenbrace}}\Righttorque\\
+\hllin{221\ }\hlstr{32\usebox{\hlboxclosebrace}\$\ из\ числа\ базисных\ переменных,}\\
+\hllin{222\ }\hlstr{т.\textasciitilde е.\ определит\ значение}\hlstd{\ \ }\hlstr{равным\ нулю.}\\
+\hllin{223\ }\hlstr{}\\
+\hllin{224\ }\hlstr{В\ системе\ ограничений\ вида\ неравенств\ }\Righttorque\\
+\hllin{225\ }\hlstr{коэффициент\ при}\hlstd{\ \ }\hlstr{равен\ нулю.\ Тем\ самым,\ }\Righttorque\\
+\hllin{226\ }\hlstr{отражено\ то,}\\
+\hllin{227\ }\hlstr{что\ на\ судах\ 3{-}го\ типа\ по\ 2{-}ой\ }\Righttorque\\
+\hllin{228\ }\hlstr{регулярной\ линии\ количество\ }\Righttorque\\
+\hllin{229\ }\hlstr{перевозимого\ груза\ может\ быть\ только\ }\Righttorque\\
+\hllin{230\ }\hlstr{равным\ нулю.}\\
+\hllin{231\ }\hlstr{'''}\hlstd{}\hlopt{)}\\
+\hllin{232\ }\hlstd{}\\
+\hllin{233\ }\hlslc{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}\\
+\hllin{234\ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'$\backslash$section\usebox{\hlboxopenbrace}Решение\usebox{\hlboxclosebrace}'}\hlstd{}\hlopt{)}\\
+\hllin{235\ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'$\backslash$subsection\usebox{\hlboxopenbrace}Нахождение\ начального\ }\Righttorque\\
+\hllin{236\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{допустимого\ базисного\ решения.\ }\Righttorque\\
+\hllin{237\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{Метод\ Данцига.\usebox{\hlboxclosebrace}'}\hlstd{}\hlopt{)}\\
+\hllin{238\ }\hlstd{}\\
+\hllin{239\ }\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'Приведем\ индексы\ матрицы\ }\Righttorque\\
+\hllin{240\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{ограничений\ к\ такому\ виду:'}\hlstd{}\hlopt{)}\\
+\hllin{241\ }\hlstd{\\
+\hllin{242\ }wided\textunderscore table\textunderscore cols\ }\hlopt{=\ }\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{){*}}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]})+}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{)+}\hlstd{}\hlnum{1}\\
+\hllin{243\ }\hlstd{wided\textunderscore table\textunderscore rows\ }\hlopt{=\ }\hlstd{}\hlnum{2}\hlstd{}\hlopt{{*}}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{)}\\
+\hllin{244\ }\hlstd{wided\textunderscore table\ }\hlopt{=\ {[}{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}{*}}\hlstd{wided\textunderscore table\textunderscore cols\ }\hlkwa{for\ }\hlstd{i\ }\hlkwa{in\ }\hlstd{}\hlkwb{range}\hlstd{}\hlopt{(}\hlstd{wided\textunderscore table\textunderscore rows}\hlopt{){]}}\\
+\hllin{245\ }\hlstd{wided\textunderscore table\textunderscore visible\ }\hlopt{=\ {[}{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}{*}(}\hlstd{wided\textunderscore table\textunderscore cols}\hlopt{)\ }\hlstd{}\hlkwa{for\ }\hlstd{i\ }\hlkwa{in\ }\hlstd{}\hlkwb{range}\hlstd{}\hlopt{(}\Righttorque\\
+\hllin{246\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{wided\textunderscore table\textunderscore rows}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{){]}}\\
+\hllin{247\ }\hlstd{}\\
+\hllin{248\ }\hlslc{\#\ header\ of\ the\ table}\\
+\hllin{249\ }\hlstd{}\hlkwa{for\ }\hlstd{i\ }\hlkwa{in\ }\hlstd{}\hlkwb{range}\hlstd{}\hlopt{(}\hlstd{wided\textunderscore table\textunderscore cols}\hlopt{):}\\
+\hllin{250\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{wided\textunderscore table\textunderscore visible}\hlopt{{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}{[}}\hlstd{i}\hlopt{{]}\ =\ }\hlstd{}\hlstr{'\$x\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{i}\hlopt{)\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\$'}\hlstd{}\\
+\hllin{251\ }\\
+\hllin{252\ }\hlslc{\#\ first\ col\ (restrictions)\ A\textunderscore 0}\\
+\hllin{253\ }\hlstd{}\hlkwa{for\ }\hlstd{i\ }\hlkwa{in\ }\hlstd{}\hlkwb{range}\hlstd{}\hlopt{(}\hlstd{wided\textunderscore table\textunderscore rows}\hlopt{):}\\
+\hllin{254\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{try}\hlstd{}\hlopt{:}\\
+\hllin{255\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{wided\textunderscore table}\hlopt{{[}}\hlstd{i}\hlopt{{]}{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}\ =\ }\hlstd{min\textunderscore transit}\hlopt{{[}}\hlstd{i}\hlopt{{]}}\\
+\hllin{256\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{wided\textunderscore table\textunderscore visible}\hlopt{{[}}\hlstd{i}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}\ =\ }\hlstd{}\hlstr{'\$'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{min\textunderscore transit}\hlopt{{[}}\hlstd{i}\hlopt{{]})\ +\ }\hlstd{}\hlstr{'\$'}\hlstd{\\
+\hllin{257\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{except\ }\hlstd{}\hlkwc{IndexError}\hlstd{}\hlopt{:}\\
+\hllin{258\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{wided\textunderscore table}\hlopt{{[}}\hlstd{i}\hlopt{{]}{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}\ =\ }\hlstd{vehicles}\hlopt{{[}}\hlstd{i}\hlopt{{-}}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{min\textunderscore transit}\hlopt{){]}}\\
+\hllin{259\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{wided\textunderscore table\textunderscore visible}\hlopt{{[}}\hlstd{i}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}\ =\ }\hlstd{}\hlstr{'\$'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{vehicles}\hlopt{{[}}\hlstd{i}\hlopt{{-}}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\Righttorque\\
+\hllin{260\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{min\textunderscore transit}\hlopt{){]})\ +\ }\hlstd{}\hlstr{'\$'}\hlstd{}\\
+\hllin{261\ }\\
+\hllin{262\ }\hlslc{\#\ coeffs\ of\ restrictions}\\
+\hllin{263\ }\hlstd{}\hlkwa{for\ }\hlstd{row}\hlopt{,\ }\hlstd{value\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{):}\\
+\hllin{264\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{col}\hlopt{,\ }\hlstd{item\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{value}\hlopt{):}\\
+\hllin{265\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{curr\textunderscore col\ }\hlopt{=\ }\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{){*}}\hlstd{col}\hlopt{+}\hlstd{row}\hlopt{+}\hlstd{}\hlnum{1}\\
+\hllin{266\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{wided\textunderscore table}\hlopt{{[}}\hlstd{row}\hlopt{{]}{[}}\hlstd{curr\textunderscore col}\hlopt{{]}\ =\ }\hlstd{item\\
+\hllin{267\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{wided\textunderscore table\textunderscore visible}\hlopt{{[}}\hlstd{row}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}{[}}\hlstd{curr\textunderscore col}\hlopt{{]}\ =\ }\hlstd{}\hlstr{'\$}\hlesc{$\backslash$$\backslash$}\hlstr{mathbf\usebox{\hlboxopenbrace}'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{item}\hlopt{)}\Righttorque\\
+\hllin{268\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{+\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\$'}\hlstd{}\\
+\hllin{269\ }\\
+\hllin{270\ }\hlslc{\#\ additional\ {-}1\ to\ make\ equations\ with\ 0}\\
+\hllin{271\ }\hlstd{}\hlkwa{for\ }\hlstd{item\ }\hlkwa{in\ }\hlstd{}\hlkwb{range}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{)):}\\
+\hllin{272\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{wided\textunderscore table}\hlopt{{[}}\hlstd{item}\hlopt{{]}{[}}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{){*}{*}}\hlstd{}\hlnum{2}\hlstd{}\hlopt{+}\hlstd{item}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\ =\ {-}}\hlstd{}\hlnum{1}\\
+\hllin{273\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{wided\textunderscore table\textunderscore visible}\hlopt{{[}}\hlstd{item}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}{[}}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{){*}{*}}\hlstd{}\hlnum{2}\hlstd{}\hlopt{+}\hlstd{item}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\ =\ }\hlstd{}\hlstr{'\$}\hlesc{$\backslash$$\backslash$}\hlstr{mathbf\usebox{\hlboxopenbrace}'}\hlstd{\ }\hlopt{+\ }\Righttorque\\
+\hllin{274\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{({-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{)\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\$'}\hlstd{}\\
+\hllin{275\ }\\
+\hllin{276\ }\hlslc{\#\ coeffs\ of\ vehicles\ restrictions}\\
+\hllin{277\ }\hlstd{}\hlkwa{for\ }\hlstd{row}\hlopt{,\ }\hlstd{value\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{):}\\
+\hllin{278\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{col}\hlopt{,\ }\hlstd{item\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{value}\hlopt{):}\\
+\hllin{279\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{curr\textunderscore col\ }\hlopt{=\ }\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{){*}}\hlstd{col}\hlopt{+}\hlstd{row}\hlopt{+}\hlstd{}\hlnum{1}\\
+\hllin{280\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{wided\textunderscore table}\hlopt{{[}}\hlstd{row}\hlopt{+}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{){]}{[}}\hlstd{curr\textunderscore col}\hlopt{{]}\ =\ }\hlstd{}\hlnum{1}\\
+\hllin{281\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{wided\textunderscore table\textunderscore visible}\hlopt{{[}}\hlstd{row}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{+}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{){]}{[}}\hlstd{curr\textunderscore col}\hlopt{{]}\ =\ }\hlstd{}\hlstr{'\$}\hlesc{$\backslash$$\backslash$}\hlstr{mathbf\usebox{\hlboxopenbrace}'}\hlstd{\ }\hlopt{+}\Righttorque\\
+\hllin{282\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{}\hlnum{1}\hlstd{}\hlopt{)\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\$'}\hlstd{}\\
+\hllin{283\ }\\
+\hllin{284\ }\hlkwd{writetbl}\hlstd{}\hlopt{(}\hlstd{wided\textunderscore table\textunderscore visible}\hlopt{)}\\
+\hllin{285\ }\hlstd{}\hlslc{\#\ writetbl(wided\textunderscore table)}\\
+\hllin{286\ }\hlstd{}\\
+\hllin{287\ }\\
+\hllin{288\ }\hlslc{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}\\
+\hllin{289\ }\hlstd{\\
+\hllin{290\ }basis\textunderscore idx\ }\hlopt{=\ {[}{]}}\\
+\hllin{291\ }\hlstd{basis\textunderscore val\ }\hlopt{=\ {[}{]}}\\
+\hllin{292\ }\hlstd{text\ }\hlopt{=\ }\hlstd{}\hlstr{'Вводим\ в\ базис\ произвольные\ }\Righttorque\\
+\hllin{293\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ }\hlstr{переменные:\ '}\hlstd{}\\
+\hllin{294\ }\\
+\hllin{295\ }\hlkwa{for\ }\hlstd{i\ }\hlkwa{in\ }\hlstd{}\hlkwb{range}\hlstd{}\hlopt{(}\hlstd{wided\textunderscore table\textunderscore rows}\hlopt{):}\\
+\hllin{296\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{basis\textunderscore idx}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\hlstd{i}\hlopt{)}\\
+\hllin{297\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{basis\textunderscore val}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{({[}\ }\hlstd{row}\hlopt{{[}}\hlstd{i}\hlopt{{]}\ }\hlstd{}\hlkwa{for\ }\hlstd{row\ }\hlkwa{in\ }\hlstd{wided\textunderscore table\ }\hlopt{{]})}\\
+\hllin{298\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlstr{'\$A\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{i}\hlopt{)\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\$,\ '}\hlstd{\\
+\hllin{299\ }\\
+\hllin{300\ }not\textunderscore basis\textunderscore idx\ }\hlopt{=\ }\hlstd{}\hlkwb{sorted}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{list}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{set}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{range}\hlstd{}\hlopt{(}\hlstd{wided\textunderscore table\textunderscore cols}\hlopt{))\ {-}\ }\hlstd{}\hlkwb{set}\hlstd{}\hlopt{(}\Righttorque\\
+\hllin{301\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{basis\textunderscore idx}\hlopt{)))}\\
+\hllin{302\ }\hlstd{not\textunderscore basis\textunderscore val\ }\hlopt{=\ {[}{]}}\\
+\hllin{303\ }\hlstd{}\hlkwa{for\ }\hlstd{idx\ }\hlkwa{in\ }\hlstd{not\textunderscore basis\textunderscore idx}\hlopt{:}\\
+\hllin{304\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{not\textunderscore basis\textunderscore val}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{({[}\ }\hlstd{row}\hlopt{{[}}\hlstd{idx}\hlopt{{]}\ }\hlstd{}\hlkwa{for\ }\hlstd{row\ }\hlkwa{in\ }\hlstd{wided\textunderscore table\ }\hlopt{{]})}\\
+\hllin{305\ }\hlstd{text\ }\hlopt{=\ }\hlstd{text}\hlopt{{[}:{-}}\hlstd{}\hlnum{2}\hlstd{}\hlopt{{]}\ +\ }\hlstd{}\hlstr{'.'}\hlstd{}\\
+\hllin{306\ }\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{text}\hlopt{)}\\
+\hllin{307\ }\hlstd{}\\
+\hllin{308\ }\hlslc{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}\\
+\hllin{309\ }\hlstd{\\
+\hllin{310\ }aux\textunderscore array\ }\hlopt{=\ {[}}\hlstd{random}\hlopt{.}\hlstd{}\hlkwd{randrange}\hlstd{}\hlopt{(}\hlstd{}\hlnum{0}\hlstd{}\hlopt{,}\hlstd{}\hlnum{10}\hlstd{}\hlopt{)\ }\hlstd{}\hlkwa{for\ }\hlstd{i\ }\hlkwa{in\ }\hlstd{}\hlkwb{range}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore idx}\hlopt{)){]}}\\
+\hllin{311\ }\hlstd{\\
+\hllin{312\ }SUCCESS\ }\hlopt{=\ }\hlstd{}\hlkwa{False}\\
+\hllin{313\ }\hlstd{iteration\ }\hlopt{=\ }\hlstd{}\hlnum{1}\\
+\hllin{314\ }\hlstd{}\hlkwa{while\ }\hlstd{iteration\ }\hlopt{\usebox{\hlboxlessthan}\ }\hlstd{MAX\textunderscore ITERATIONS\ }\hlopt{+\ }\hlstd{}\hlnum{1}\hlstd{}\hlopt{:}\\
+\hllin{315\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{subsubsection\usebox{\hlboxopenbrace}Шаг\ '}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{iteration}\hlopt{)\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}'}\hlstd{}\hlopt{)}\\
+\hllin{316\ }\hlstd{\\
+\hllin{317\ }}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\#\ equations\ on\ step}\\
+\hllin{318\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{small'}\hlstd{}\hlopt{)}\\
+\hllin{319\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{idx}\hlopt{,\ }\hlstd{nbas\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{not\textunderscore basis\textunderscore idx}\hlopt{):}\\
+\hllin{320\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{=\ }\hlstd{}\hlstr{''}\hlstd{\\
+\hllin{321\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{i\ }\hlkwa{in\ }\hlstd{}\hlkwb{range}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore val}\hlopt{{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]})):}\\
+\hllin{322\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$t}\hlstr{A\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{}\hlopt{+}\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{nbas}\hlopt{)+}\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\ \&=\ '}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{not\textunderscore basis\textunderscore val}\hlopt{{[}}\Righttorque\\
+\hllin{323\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{not\textunderscore basis\textunderscore idx}\hlopt{.}\hlstd{}\hlkwd{index}\hlstd{}\hlopt{(}\hlstd{nbas}\hlopt{){]}{[}}\hlstd{i}\hlopt{{]})\ +\ }\hlstd{}\hlstr{'\ =\ '}\hlstd{\\
+\hllin{324\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{bas\ }\hlkwa{in\ }\hlstd{basis\textunderscore idx}\hlopt{:}\\
+\hllin{325\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore val}\hlopt{{[}}\hlstd{basis\textunderscore idx}\hlopt{.}\hlstd{}\hlkwd{index}\hlstd{}\hlopt{(}\hlstd{bas}\hlopt{){]}{[}}\hlstd{i}\hlopt{{]})\ +\ }\hlstd{}\hlstr{'x\textunderscore \usebox{\hlboxopenbrace}}\Righttorque\\
+\hllin{326\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{bas}\hlopt{)\ +\ }\hlstd{}\hlstr{'{-}'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{nbas}\hlopt{)\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\ +\ '}\hlstd{\\
+\hllin{327\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{=\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{text}\hlopt{{[}:{-}}\hlstd{}\hlnum{3}\hlstd{}\hlopt{{]})\ +\ }\hlstd{}\hlstr{'\ }\hlesc{$\backslash$$\backslash$$\backslash$$\backslash$\ $\backslash$n}\hlstr{'}\hlstd{\ }\hlslc{\#\ remove\ extra\ plus\ on\ }\Righttorque\\
+\hllin{328\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{the\ end}\\
+\hllin{329\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{=\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{text}\hlopt{{[}:{-}}\hlstd{}\hlnum{5}\hlstd{}\hlopt{{]})}\\
+\hllin{330\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwd{writeeq}\hlstd{}\hlopt{(}\hlstd{text}\hlopt{)}\\
+\hllin{331\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{normalsize'}\hlstd{}\hlopt{)}\\
+\hllin{332\ }\hlstd{\\
+\hllin{333\ }}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}\\
+\hllin{334\ }\hlstd{\\
+\hllin{335\ }}\hlstd{\ \ \ \ }\hlstd{basis\textunderscore solutions\ }\hlopt{=\ {[}{]}}\\
+\hllin{336\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{basis\textunderscore val\textunderscore transposed\ }\hlopt{=\ }\hlstd{}\hlkwb{list}\hlstd{}\hlopt{(}\hlstd{np}\hlopt{.}\hlstd{}\hlkwd{array}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore val}\hlopt{).}\hlstd{}\hlkwd{transpose}\hlstd{}\hlopt{())}\\
+\hllin{337\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{item\ }\hlkwa{in\ }\hlstd{not\textunderscore basis\textunderscore val}\hlopt{:}\\
+\hllin{338\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{basis\textunderscore solutions}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\\
+\hllin{339\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwb{list}\hlstd{}\hlopt{(}\hlstd{np}\hlopt{.}\hlstd{linalg}\hlopt{.}\hlstd{}\hlkwd{solve}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore val\textunderscore transposed}\hlopt{,\ }\hlstd{item}\hlopt{))}\\
+\hllin{340\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlopt{)}\\
+\hllin{341\ }\hlstd{\\
+\hllin{342\ }}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\#\ rounding\ result}\\
+\hllin{343\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\#\ dirty\ hack\ with\ float(str())}\\
+\hllin{344\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{basis\textunderscore solutions\ }\hlopt{=\ {[}{[}}\hlstd{}\hlkwb{float}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{round}\hlstd{}\hlopt{(}\hlstd{item}\hlopt{,}\hlstd{ROUND\textunderscore ACCURACY}\hlopt{)))\ }\hlstd{}\hlkwa{for\ }\Righttorque\\
+\hllin{345\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{item\ }\hlkwa{in\ }\hlstd{sol}\hlopt{{]}\ }\hlstd{}\hlkwa{for\ }\hlstd{sol\ }\hlkwa{in\ }\hlstd{basis\textunderscore solutions}\hlopt{{]}}\\
+\hllin{346\ }\hlstd{\\
+\hllin{347\ }\\
+\hllin{348\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'Решения\ уравнений:'}\hlstd{}\hlopt{)}\\
+\hllin{349\ }\hlstd{\\
+\hllin{350\ }}\hlstd{\ \ \ \ }\hlstd{basis\textunderscore solutions\textunderscore visible\ }\hlopt{=\ {[}{[}}\hlstd{}\hlstr{''}\hlstd{}\hlopt{{]}+{[}}\hlstd{}\hlstr{'\$x\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{}\hlopt{+}\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{i}\hlopt{)+}\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\$'}\hlstd{\ }\hlkwa{for\ }\hlstd{i\ }\hlkwa{in\ }\Righttorque\\
+\hllin{351\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{basis\textunderscore idx}\hlopt{{]}{]}}\\
+\hllin{352\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{nbas\textunderscore idx}\hlopt{,}\hlstd{nbas\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{not\textunderscore basis\textunderscore idx}\hlopt{):}\\
+\hllin{353\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{begin\usebox{\hlboxopenbrace}array\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}'}\hlstd{}\hlopt{+}\hlstd{}\hlstr{'c'}\hlstd{}\hlopt{{*}}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore solutions}\hlopt{{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]})+}\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}}\hlesc{$\backslash$n$\backslash$t}\hlstr{'}\hlstd{\\
+\hllin{354\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{bas\textunderscore idx}\hlopt{,}\hlstd{bas\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore idx}\hlopt{):}\\
+\hllin{355\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlstr{'x\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{bas}\hlopt{)\ +\ }\hlstd{}\hlstr{'{-}'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{nbas}\hlopt{)\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\ =\ '}\hlstd{$\backslash$\\
+\hllin{356\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore solutions}\hlopt{{[}}\hlstd{nbas\textunderscore idx}\hlopt{{]}{[}}\hlstd{bas\textunderscore idx}\hlopt{{]})\ +\ }\hlstd{}\hlstr{';$\backslash$\ '}\hlstd{\\
+\hllin{357\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$$\backslash$$\backslash$\ $\backslash$n$\backslash$t}\hlstr{'}\hlstd{\ }\hlkwa{if\ }\hlstd{bas\textunderscore idx\ }\hlopt{!=\ }\hlstd{}\hlnum{0\ }\hlstd{}\hlkwa{and\ }\hlstd{bas\textunderscore idx}\hlopt{\%}\hlstd{}\hlnum{3\ }\hlstd{}\hlopt{==\ }\hlstd{}\hlnum{0\ }\Righttorque\\
+\hllin{358\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{else\ }\hlstd{}\hlstr{''}\hlstd{\\
+\hllin{359\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{basis\textunderscore solutions\textunderscore visible}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{({[}}\hlstd{}\hlstr{'\$A\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{}\hlopt{+}\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{nbas}\hlopt{)+}\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\$'}\hlstd{}\hlopt{{]}+}\Righttorque\\
+\hllin{360\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{basis\textunderscore solutions}\hlopt{{[}}\hlstd{nbas\textunderscore idx}\hlopt{{]})}\\
+\hllin{361\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$n}\hlstr{$\backslash$end\usebox{\hlboxopenbrace}array\usebox{\hlboxclosebrace}'}\hlstd{\\
+\hllin{362\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\#\ writeeq(text)}\\
+\hllin{363\ }\hlstd{\\
+\hllin{364\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{writetbl}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore solutions\textunderscore visible}\hlopt{,}\hlstd{caption}\hlopt{=}\hlstd{}\hlstr{'Решения\ }\Righttorque\\
+\hllin{365\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{уравнений\ в\ виде\ таблицы'}\hlstd{}\hlopt{)}\\
+\hllin{366\ }\hlstd{\\
+\hllin{367\ }}\hlstd{\ \ \ \ }\hlstd{TO\textunderscore COMPARE\ }\hlopt{=\ }\hlstd{}\hlnum{0}\\
+\hllin{368\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'Сравнивая\ решения\ при\ \$x\textunderscore '}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\Righttorque\\
+\hllin{369\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{TO\textunderscore COMPARE}\hlopt{)\ +\ }\hlstd{}\hlstr{'\$:'}\hlstd{}\hlopt{)}\\
+\hllin{370\ }\hlstd{\\
+\hllin{371\ }}\hlstd{\ \ \ \ }\hlstd{text\ }\hlopt{=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$t}\hlstr{'}\hlstd{\\
+\hllin{372\ }}\hlstd{\ \ \ \ }\hlstd{min\textunderscore solution\ }\hlopt{=\ }\hlstd{}\hlnum{999999}\\
+\hllin{373\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{min\textunderscore idx\ }\hlopt{=\ }\hlstd{}\hlnum{0}\\
+\hllin{374\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{sol\textunderscore idx}\hlopt{,\ }\hlstd{sol\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore solutions}\hlopt{):}\\
+\hllin{375\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlstr{'x\textunderscore \usebox{\hlboxopenbrace}0'}\hlstd{}\hlopt{+}\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{not\textunderscore basis\textunderscore idx}\hlopt{{[}}\hlstd{sol\textunderscore idx}\hlopt{{]})+}\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\ =\ '}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{sol}\hlopt{{[}}\Righttorque\\
+\hllin{376\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{TO\textunderscore COMPARE}\hlopt{{]})\ +\ }\hlstd{}\hlstr{';}\hlesc{$\backslash$$\backslash$\ }\hlstr{'}\hlstd{\\
+\hllin{377\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{=\ }\hlstd{text}\hlopt{{[}:{-}}\hlstd{}\hlnum{3}\hlstd{}\hlopt{{]}\ +\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$$\backslash$$\backslash$\ $\backslash$n$\backslash$t}\hlstr{'}\hlstd{\ }\hlkwa{if\ }\hlstd{sol\textunderscore idx\ }\hlopt{!=\ }\hlstd{}\hlnum{0\ }\hlstd{}\hlkwa{and\ }\hlstd{sol\textunderscore idx}\hlopt{\%}\hlstd{}\hlnum{3\ }\Righttorque\\
+\hllin{378\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{==\ }\hlstd{}\hlnum{0\ }\hlstd{}\hlkwa{else\ }\hlstd{text\\
+\hllin{379\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{sol}\hlopt{{[}}\hlstd{TO\textunderscore COMPARE}\hlopt{{]}\ \usebox{\hlboxgreaterthan}\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{:}\\
+\hllin{380\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{sol}\hlopt{{[}}\hlstd{TO\textunderscore COMPARE}\hlopt{{]}\ \usebox{\hlboxlessthan}\ }\hlstd{min\textunderscore solution}\hlopt{:}\\
+\hllin{381\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{min\textunderscore solution\ }\hlopt{=\ }\hlstd{sol}\hlopt{{[}}\hlstd{TO\textunderscore COMPARE}\hlopt{{]}}\\
+\hllin{382\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{min\textunderscore idx\ }\hlopt{=\ }\hlstd{sol\textunderscore idx\\
+\hllin{383\ }\\
+\hllin{384\ }}\hlstd{\ \ \ \ }\hlstd{text\ }\hlopt{=\ }\hlstd{text}\hlopt{{[}:{-}}\hlstd{}\hlnum{3}\hlstd{}\hlopt{{]}}\\
+\hllin{385\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{writeeq}\hlstd{}\hlopt{(}\hlstd{text}\hlopt{)}\\
+\hllin{386\ }\hlstd{\\
+\hllin{387\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{min\textunderscore solution\ }\hlopt{!=\ }\hlstd{}\hlnum{999999}\hlstd{}\hlopt{:}\\
+\hllin{388\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'Минимальный\ элемент:\ \$x\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{}\hlopt{+}\hlstd{$\backslash$\\
+\hllin{389\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{TO\textunderscore COMPARE}\hlopt{)\ +\ }\hlstd{}\hlstr{'{-}'}\hlstd{}\hlopt{+}\hlstd{$\backslash$\\
+\hllin{390\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{not\textunderscore basis\textunderscore idx}\hlopt{{[}}\hlstd{min\textunderscore idx}\hlopt{{]})+}\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\ =\ '}\hlstd{\ }\hlopt{+}\hlstd{$\backslash$\\
+\hllin{391\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{min\textunderscore solution}\hlopt{)\ +\ }\hlstd{}\hlstr{'\$.'}\hlstd{}\hlopt{)}\\
+\hllin{392\ }\hlstd{\\
+\hllin{393\ }}\hlstd{\ \ \ \ }\hlstd{exclude\textunderscore eq\textunderscore idx\ }\hlopt{=\ {-}}\hlstd{}\hlnum{1}\\
+\hllin{394\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{theta0\ }\hlopt{=\ {-}}\hlstd{}\hlnum{1}\\
+\hllin{395\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{sol\textunderscore idx}\hlopt{,}\hlstd{sol\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore solutions}\hlopt{{[}}\hlstd{min\textunderscore idx}\hlopt{{]}):}\\
+\hllin{396\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\#\ if\ sol\textunderscore idx\ !=\ 0:}\\
+\hllin{397\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{sol\ }\hlopt{\usebox{\hlboxgreaterthan}\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{:}\\
+\hllin{398\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{aux\textunderscore array}\hlopt{{[}}\hlstd{sol\textunderscore idx}\hlopt{{]}/}\hlstd{sol\ }\hlopt{\usebox{\hlboxgreaterthan}\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{:}\\
+\hllin{399\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{exclude\textunderscore eq\textunderscore idx\ }\hlopt{=\ }\hlstd{sol\textunderscore idx\\
+\hllin{400\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{theta0\ }\hlopt{=\ }\hlstd{}\hlkwb{round}\hlstd{}\hlopt{(}\hlstd{aux\textunderscore array}\hlopt{{[}}\hlstd{sol\textunderscore idx}\hlopt{{]}/}\hlstd{sol}\hlopt{,}\hlstd{ROUND\textunderscore ACCURACY}\hlopt{)}\\
+\hllin{401\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{break}\\
+\hllin{402\ }\hlstd{\\
+\hllin{403\ }}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\#\ if\ there's\ no\ positive\ coeffs,\ it\ means\ that\ we\ find\ optimal\ }\Righttorque\\
+\hllin{404\ }\hlslc{}\hlstd{\ \ \ \ }\hlslc{basis\ solution}\\
+\hllin{405\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{}\hlopt{(}\hlstd{exclude\textunderscore eq\textunderscore idx\ }\hlopt{==\ {-}}\hlstd{}\hlnum{1\ }\hlstd{}\hlkwa{and\ }\hlstd{theta0\ }\hlopt{==\ {-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{)\ }\hlstd{}\hlkwa{or\ }\hlstd{min\textunderscore solution\ }\hlopt{==\ }\Righttorque\\
+\hllin{406\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlnum{999999}\hlstd{}\hlopt{:}\\
+\hllin{407\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'Нет\ положительных\ }\Righttorque\\
+\hllin{408\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{коэффициентов,\ }\Righttorque\\
+\hllin{409\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{соответственно\ допустимое\ }\Righttorque\\
+\hllin{410\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{базисное\ решение:'}\hlstd{}\hlopt{)}\\
+\hllin{411\ }\hlstd{\\
+\hllin{412\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{=\ }\hlstd{}\hlstr{''}\hlstd{\\
+\hllin{413\ }\\
+\hllin{414\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{sol\textunderscore idx}\hlopt{,}\hlstd{sol\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore solutions}\hlopt{{[}}\hlstd{min\textunderscore idx}\hlopt{{]}):}\\
+\hllin{415\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlstr{'x\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{}\hlopt{+}\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{not\textunderscore basis\textunderscore idx}\hlopt{{[}}\hlstd{min\textunderscore idx}\hlopt{{]})+}\hlstd{}\hlstr{'{-}'}\hlstd{}\hlopt{+}\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\Righttorque\\
+\hllin{416\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{basis\textunderscore idx}\hlopt{{[}}\hlstd{sol\textunderscore idx}\hlopt{{]})+}\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\textasciicircum \usebox{\hlboxopenbrace}}\hlesc{$\backslash$$\backslash$}\hlstr{{*}\usebox{\hlboxclosebrace}\ =\ '}\hlstd{$\backslash$\\
+\hllin{417\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{sol}\hlopt{)\ +\ }\hlstd{}\hlstr{',}\hlesc{$\backslash$$\backslash$\ }\hlstr{'}\hlstd{\\
+\hllin{418\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{=\ }\hlstd{text}\hlopt{{[}:{-}}\hlstd{}\hlnum{3}\hlstd{}\hlopt{{]}\ +\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$$\backslash$$\backslash$\ $\backslash$n$\backslash$t}\hlstr{'}\hlstd{\ }\hlkwa{if\ }\hlstd{sol\textunderscore idx\ }\hlopt{!=\ }\hlstd{}\hlnum{0\ }\hlstd{}\hlkwa{and\ }\Righttorque\\
+\hllin{419\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{sol\textunderscore idx}\hlopt{\%}\hlstd{}\hlnum{3\ }\hlstd{}\hlopt{==\ }\hlstd{}\hlnum{0\ }\hlstd{}\hlkwa{else\ }\hlstd{text\\
+\hllin{420\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{=\ }\hlstd{text}\hlopt{{[}:{-}}\hlstd{}\hlnum{3}\hlstd{}\hlopt{{]}}\\
+\hllin{421\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwd{writeeq}\hlstd{}\hlopt{(}\hlstd{text}\hlopt{)}\\
+\hllin{422\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{SUCCESS\ }\hlopt{=\ }\hlstd{}\hlkwa{True}\\
+\hllin{423\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{break}\\
+\hllin{424\ }\hlstd{\\
+\hllin{425\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'Вводим\ в\ базис\ вектор\ \$A\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\Righttorque\\
+\hllin{426\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{not\textunderscore basis\textunderscore idx}\hlopt{{[}}\hlstd{min\textunderscore idx}\hlopt{{]})\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\$\ и\ запишем\ }\Righttorque\\
+\hllin{427\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{для\ него\ уравнение:'}\hlstd{}\hlopt{)}\\
+\hllin{428\ }\hlstd{\\
+\hllin{429\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{small'}\hlstd{}\hlopt{)}\\
+\hllin{430\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{text\ }\hlopt{=\ }\hlstd{}\hlstr{''}\hlstd{\\
+\hllin{431\ }}\hlstd{\ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlstr{'A\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{}\hlopt{+}\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{not\textunderscore basis\textunderscore idx}\hlopt{{[}}\hlstd{min\textunderscore idx}\hlopt{{]})+}\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\ =\ '}\hlstd{\\
+\hllin{432\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{sol\textunderscore idx}\hlopt{,}\hlstd{sol\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore solutions}\hlopt{{[}}\hlstd{min\textunderscore idx}\hlopt{{]}):}\\
+\hllin{433\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{sol\textunderscore idx\ }\hlopt{!=\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{:}\\
+\hllin{434\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{sol\ }\hlopt{\usebox{\hlboxgreaterthan}\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{:}\\
+\hllin{435\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlstr{'+'}\hlstd{\\
+\hllin{436\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{sol}\hlopt{)\ +}\hlstd{$\backslash$\\
+\hllin{437\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlstr{'x\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{}\hlopt{+}\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{not\textunderscore basis\textunderscore idx}\hlopt{{[}}\hlstd{min\textunderscore idx}\hlopt{{]})+}\hlstd{}\hlstr{'{-}'}\hlstd{}\hlopt{+}\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore idx}\hlopt{{[}}\hlstd{sol\textunderscore idx}\hlopt{{]})+}\Righttorque\\
+\hllin{438\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}'}\hlstd{\\
+\hllin{439\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{writeeq}\hlstd{}\hlopt{(}\hlstd{text}\hlopt{)}\\
+\hllin{440\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{normalsize'}\hlstd{}\hlopt{)}\\
+\hllin{441\ }\hlstd{\\
+\hllin{442\ }}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}\\
+\hllin{443\ }\hlstd{\\
+\hllin{444\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{iteration\ }\hlopt{==\ }\hlstd{}\hlnum{1}\hlstd{}\hlopt{:}\\
+\hllin{445\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'Введем\ вспомогательный\ }\Righttorque\\
+\hllin{446\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{вектор\ со\ случайными\ }\Righttorque\\
+\hllin{447\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{значениями:'}\hlstd{}\hlopt{)}\\
+\hllin{448\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{else}\hlstd{}\hlopt{:}\\
+\hllin{449\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'Вспомогательный\ вектор\ на\ }\Righttorque\\
+\hllin{450\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{этом\ шаге:'}\hlstd{}\hlopt{)}\\
+\hllin{451\ }\hlstd{\\
+\hllin{452\ }}\hlstd{\ \ \ \ }\hlstd{text\ }\hlopt{=\ }\hlstd{}\hlstr{''}\hlstd{\\
+\hllin{453\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{idx\ }\hlkwa{in\ }\hlstd{}\hlkwb{range}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{aux\textunderscore array}\hlopt{)):}\\
+\hllin{454\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{rho\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{\ }\hlkwa{if\ }\hlstd{idx\ }\hlopt{==\ }\hlstd{}\hlnum{0\ }\hlstd{}\hlkwa{else\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{omega\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{\\
+\hllin{455\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{idx}\hlopt{)+}\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}'}\hlstd{\\
+\hllin{456\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlstr{'\ =\ '}\hlstd{}\hlopt{+}\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{aux\textunderscore array}\hlopt{{[}}\hlstd{idx}\hlopt{{]})\ +\ }\hlstd{}\hlstr{';}\hlesc{$\backslash$$\backslash$\ }\hlstr{'}\hlstd{\\
+\hllin{457\ }}\hlstd{\ \ \ \ }\hlstd{text\ }\hlopt{=\ }\hlstd{text}\hlopt{{[}:{-}}\hlstd{}\hlnum{3}\hlstd{}\hlopt{{]}}\\
+\hllin{458\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{writeeq}\hlstd{}\hlopt{(}\hlstd{text}\hlopt{)}\\
+\hllin{459\ }\hlstd{\\
+\hllin{460\ }}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\#\ including\ new\ vector}\\
+\hllin{461\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{basis\textunderscore idx}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\hlstd{not\textunderscore basis\textunderscore idx}\hlopt{{[}}\hlstd{min\textunderscore idx}\hlopt{{]})}\\
+\hllin{462\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{basis\textunderscore val}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\hlstd{not\textunderscore basis\textunderscore val}\hlopt{{[}}\hlstd{min\textunderscore idx}\hlopt{{]})}\\
+\hllin{463\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{not\textunderscore basis\textunderscore idx}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore idx}\hlopt{{[}}\hlstd{exclude\textunderscore eq\textunderscore idx}\hlopt{{]})}\\
+\hllin{464\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{not\textunderscore basis\textunderscore val}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore val}\hlopt{{[}}\hlstd{exclude\textunderscore eq\textunderscore idx}\hlopt{{]})}\\
+\hllin{465\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{del\ }\hlstd{not\textunderscore basis\textunderscore idx}\hlopt{{[}}\hlstd{min\textunderscore idx}\hlopt{{]}}\\
+\hllin{466\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{del\ }\hlstd{not\textunderscore basis\textunderscore val}\hlopt{{[}}\hlstd{min\textunderscore idx}\hlopt{{]}}\\
+\hllin{467\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{del\ }\hlstd{basis\textunderscore idx}\hlopt{{[}}\hlstd{exclude\textunderscore eq\textunderscore idx}\hlopt{{]}}\\
+\hllin{468\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{del\ }\hlstd{basis\textunderscore val}\hlopt{{[}}\hlstd{exclude\textunderscore eq\textunderscore idx}\hlopt{{]}}\\
+\hllin{469\ }\hlstd{\\
+\hllin{470\ }}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\#\ sorting\ like\ in\ wided\ table}\\
+\hllin{471\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{basis\textunderscore idx}\hlopt{,\ }\hlstd{basis\textunderscore val\ }\hlopt{=\ {[}}\hlstd{}\hlkwb{list}\hlstd{}\hlopt{(}\hlstd{i}\hlopt{)\ }\hlstd{}\hlkwa{for\ }\hlstd{i\ }\hlkwa{in\ }\hlstd{}\hlkwb{zip}\hlstd{}\hlopt{({*}}\hlstd{}\hlkwb{sorted}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{zip}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore idx}\hlopt{,}\Righttorque\\
+\hllin{472\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{basis\textunderscore val}\hlopt{))){]}}\\
+\hllin{473\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{not\textunderscore basis\textunderscore idx}\hlopt{,\ }\hlstd{not\textunderscore basis\textunderscore val\ }\hlopt{=\ {[}}\hlstd{}\hlkwb{list}\hlstd{}\hlopt{(}\hlstd{i}\hlopt{)\ }\hlstd{}\hlkwa{for\ }\hlstd{i\ }\hlkwa{in\ }\hlstd{}\hlkwb{zip}\hlstd{}\hlopt{({*}}\hlstd{}\hlkwb{sorted}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{zip}\hlstd{}\hlopt{(}\Righttorque\\
+\hllin{474\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{not\textunderscore basis\textunderscore idx}\hlopt{,\ }\hlstd{not\textunderscore basis\textunderscore val}\hlopt{))){]}}\\
+\hllin{475\ }\hlstd{\\
+\hllin{476\ }}\hlstd{\ \ \ \ }\hlstd{text\ }\hlopt{=\ }\hlstd{}\hlstr{'Выводим\ из\ базиса\ вектор\ \$A\textunderscore '}\hlstd{\ }\hlopt{+}\hlstd{$\backslash$\\
+\hllin{477\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore idx}\hlopt{{[}}\hlstd{exclude\textunderscore eq\textunderscore idx}\hlopt{{]})\ +}\hlstd{$\backslash$\\
+\hllin{478\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlstr{'\$,\ т.к.\ \$'}\hlstd{}\hlopt{+}\hlstd{$\backslash$\\
+\hllin{479\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{theta\textunderscore 0\ =\ }\hlesc{$\backslash$$\backslash$}\hlstr{frac\usebox{\hlboxopenbrace}'}\hlstd{}\hlopt{+}\hlstd{$\backslash$\\
+\hllin{480\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{aux\textunderscore array}\hlopt{{[}}\hlstd{exclude\textunderscore eq\textunderscore idx}\hlopt{{]})+}\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}'}\hlstd{}\hlopt{+}\hlstd{$\backslash$\\
+\hllin{481\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore solutions}\hlopt{{[}}\hlstd{min\textunderscore idx}\hlopt{{]}{[}}\hlstd{exclude\textunderscore eq\textunderscore idx}\hlopt{{]})+}\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\$\ =\ '}\hlstd{$\backslash$\\
+\hllin{482\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{theta0}\hlopt{)}\\
+\hllin{483\ }\hlstd{\\
+\hllin{484\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{idx}\hlopt{,}\hlstd{item\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{aux\textunderscore array}\hlopt{):}\\
+\hllin{485\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{aux\textunderscore array}\hlopt{{[}}\hlstd{idx}\hlopt{{]}\ =\ }\hlstd{}\hlkwb{round}\hlstd{}\hlopt{(}\hlstd{item\ }\hlopt{+\ }\hlstd{theta0}\hlopt{{*}}\hlstd{basis\textunderscore solutions}\hlopt{{[}}\hlstd{min\textunderscore idx}\hlopt{{]}{[}}\Righttorque\\
+\hllin{486\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{idx}\hlopt{{]},}\hlstd{ROUND\textunderscore ACCURACY}\hlopt{)}\\
+\hllin{487\ }\hlstd{\\
+\hllin{488\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{text}\hlopt{)}\\
+\hllin{489\ }\hlstd{\\
+\hllin{490\ }}\hlstd{\ \ \ \ }\hlstd{iteration\ }\hlopt{+=\ }\hlstd{}\hlnum{1}\\
+\hllin{491\ }\hlstd{}\\
+\hllin{492\ }\hlkwa{if\ not\ }\hlstd{SUCCESS}\hlopt{:}\\
+\hllin{493\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'Не\ найдено\ решения\ за\ '}\hlstd{\ }\hlopt{+}\hlstd{$\backslash$\\
+\hllin{494\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{MAX\textunderscore ITERATIONS}\hlopt{)\ +}\hlstd{$\backslash$\\
+\hllin{495\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlstr{'\ шагов.\ Или\ что{-}то\ пошло\ не\ так\ или\ }\Righttorque\\
+\hllin{496\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ }\hlstr{надо\ увеличить\ число\ шагов.'}\hlstd{}\hlopt{)}\\
+\hllin{497\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{report\textunderscore output}\hlopt{.}\hlstd{}\hlkwd{close}\hlstd{}\hlopt{()}\\
+\hllin{498\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{exit}\hlstd{}\hlopt{()}\\
+\hllin{499\ }\hlstd{}\\
+\hllin{500\ }\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{subsection\usebox{\hlboxopenbrace}Переход\ от\ начального\ }\Righttorque\\
+\hllin{501\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{допустимого\ решения\ к\ первой\ }\Righttorque\\
+\hllin{502\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{симплекс{-}таблице\usebox{\hlboxclosebrace}'}\hlstd{}\hlopt{)}\\
+\hllin{503\ }\hlstd{}\\
+\hllin{504\ }\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'Разложим\ небазисные\ векторы\ }\Righttorque\\
+\hllin{505\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{по\ найденному\ методом\ Данцига\ }\Righttorque\\
+\hllin{506\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{базису:'}\hlstd{}\hlopt{)}\\
+\hllin{507\ }\hlstd{\\
+\hllin{508\ }simplex\textunderscore tbl\ }\hlopt{=\ {[}{]}}\\
+\hllin{509\ }\hlstd{conversion\textunderscore tbl\ }\hlopt{=\ {[}{]}}\\
+\hllin{510\ }\hlstd{}\\
+\hllin{511\ }\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{small'}\hlstd{}\hlopt{)}\\
+\hllin{512\ }\hlstd{}\hlkwa{for\ }\hlstd{nbas\textunderscore idx}\hlopt{,}\hlstd{nbas\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{not\textunderscore basis\textunderscore val}\hlopt{):}\\
+\hllin{513\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{text\ }\hlopt{=\ }\hlstd{}\hlstr{''}\hlstd{\\
+\hllin{514\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{item\textunderscore idx}\hlopt{,\ }\hlstd{item\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{nbas}\hlopt{):}\\
+\hllin{515\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{nbas}\hlopt{{[}}\hlstd{item\textunderscore idx}\hlopt{{]})\ +\ }\hlstd{}\hlstr{'\ \&=\ '}\hlstd{\\
+\hllin{516\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{bas\textunderscore idx}\hlopt{,\ }\hlstd{bas\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore idx}\hlopt{):}\\
+\hllin{517\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{bas\textunderscore idx\ }\hlopt{!=\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{:}\\
+\hllin{518\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ not\ }\hlstd{basis\textunderscore val}\hlopt{{[}}\hlstd{bas\textunderscore idx}\hlopt{{]}{[}}\hlstd{item\textunderscore idx}\hlopt{{]}\ \usebox{\hlboxlessthan}\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{:}\\
+\hllin{519\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlstr{'+'}\hlstd{\\
+\hllin{520\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore val}\hlopt{{[}}\hlstd{bas\textunderscore idx}\hlopt{{]}{[}}\hlstd{item\textunderscore idx}\hlopt{{]})\ +}\hlstd{$\backslash$\\
+\hllin{521\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlstr{'x\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{bas}\hlopt{)\ +\ }\hlstd{}\hlstr{'{-}'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{not\textunderscore basis\textunderscore idx}\hlopt{{[}}\hlstd{nbas\textunderscore idx}\hlopt{{]})\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}}\Righttorque\\
+\hllin{522\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{'}\hlstd{\\
+\hllin{523\ }\\
+\hllin{524\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlstr{'\ }\hlesc{$\backslash$$\backslash$$\backslash$$\backslash$\ $\backslash$n$\backslash$t}\hlstr{'}\hlstd{\\
+\hllin{525\ }}\hlstd{\ \ \ \ }\hlstd{text\ }\hlopt{=\ }\hlstd{text}\hlopt{{[}:{-}}\hlstd{}\hlnum{3}\hlstd{}\hlopt{{]}}\\
+\hllin{526\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{writeeq}\hlstd{}\hlopt{(}\hlstd{text}\hlopt{)}\\
+\hllin{527\ }\hlstd{}\\
+\hllin{528\ }\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{normalsize'}\hlstd{}\hlopt{)}\\
+\hllin{529\ }\hlstd{}\\
+\hllin{530\ }\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'Решая\ каждую\ из\ систем\ }\Righttorque\\
+\hllin{531\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{уравнений,\ получим:'}\hlstd{}\hlopt{)}\\
+\hllin{532\ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{footnotesize'}\hlstd{}\hlopt{)}\\
+\hllin{533\ }\hlstd{}\\
+\hllin{534\ }\hlkwa{for\ }\hlstd{item\ }\hlkwa{in\ }\hlstd{not\textunderscore basis\textunderscore val}\hlopt{:}\\
+\hllin{535\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{conversion\textunderscore tbl}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\\
+\hllin{536\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwb{list}\hlstd{}\hlopt{(}\hlstd{np}\hlopt{.}\hlstd{linalg}\hlopt{.}\hlstd{}\hlkwd{solve}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore val\textunderscore transposed}\hlopt{,\ }\hlstd{item}\hlopt{))}\\
+\hllin{537\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlopt{)}\\
+\hllin{538\ }\hlstd{conversion\textunderscore tbl\ }\hlopt{=\ {[}{[}}\hlstd{}\hlkwb{float}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{round}\hlstd{}\hlopt{(}\hlstd{j}\hlopt{,}\hlstd{ROUND\textunderscore ACCURACY}\hlopt{)))\ }\hlstd{}\hlkwa{for\ }\hlstd{j\ }\hlkwa{in\ }\hlstd{i}\hlopt{{]}\ }\hlstd{}\hlkwa{for\ }\Righttorque\\
+\hllin{539\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{i\ }\hlkwa{in\ }\hlstd{conversion\textunderscore tbl}\hlopt{{]}}\\
+\hllin{540\ }\hlstd{\\
+\hllin{541\ }text\ }\hlopt{=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{begin\usebox{\hlboxopenbrace}array\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlstr{'c'}\hlstd{}\hlopt{{*}}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{conversion\textunderscore tbl}\hlopt{{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]})\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}}\hlesc{$\backslash$n}\hlstr{'}\hlstd{}\\
+\hllin{542\ }\hlkwa{for\ }\hlstd{row\textunderscore idx}\hlopt{,}\hlstd{row\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{conversion\textunderscore tbl}\hlopt{):}\\
+\hllin{543\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$t}\hlstr{'}\hlstd{\\
+\hllin{544\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{item\textunderscore idx}\hlopt{,}\hlstd{item\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{row}\hlopt{):}\\
+\hllin{545\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{text\ }\hlopt{+=\ }\hlstd{}\hlstr{'x\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{\ }\hlopt{+}\hlstd{$\backslash$\\
+\hllin{546\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore idx}\hlopt{{[}}\hlstd{item\textunderscore idx}\hlopt{{]})\ +}\hlstd{$\backslash$\\
+\hllin{547\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlstr{'{-}'}\hlstd{\ }\hlopt{+}\hlstd{$\backslash$\\
+\hllin{548\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{not\textunderscore basis\textunderscore idx}\hlopt{{[}}\hlstd{row\textunderscore idx}\hlopt{{]})\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\ =\ '}\hlstd{$\backslash$\\
+\hllin{549\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{item}\hlopt{)\ +\ }\hlstd{}\hlstr{',\ \&\ '}\hlstd{\\
+\hllin{550\ }}\hlstd{\ \ \ \ }\hlstd{text\ }\hlopt{=\ }\hlstd{text}\hlopt{{[}:{-}}\hlstd{}\hlnum{4}\hlstd{}\hlopt{{]}\ +\ }\hlstd{}\hlstr{'\ }\hlesc{$\backslash$$\backslash$$\backslash$$\backslash$\ $\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{551\ }\\
+\hllin{552\ }text\ }\hlopt{=\ }\hlstd{text}\hlopt{{[}:{-}}\hlstd{}\hlnum{4}\hlstd{}\hlopt{{]}\ +\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$n$\backslash$$\backslash$}\hlstr{end\usebox{\hlboxopenbrace}array\usebox{\hlboxclosebrace}'}\hlstd{}\\
+\hllin{553\ }\hlkwd{writeeq}\hlstd{}\hlopt{(}\hlstd{text}\hlopt{)}\\
+\hllin{554\ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{normalsize'}\hlstd{}\hlopt{)}\\
+\hllin{555\ }\hlstd{}\hlslc{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}\\
+\hllin{556\ }\hlstd{}\\
+\hllin{557\ }\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{subsection\usebox{\hlboxopenbrace}Решение\ методом\ }\Righttorque\\
+\hllin{558\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{полного\ исключения\ Гаусса\usebox{\hlboxclosebrace}'}\hlstd{}\hlopt{)}\\
+\hllin{559\ }\hlstd{}\\
+\hllin{560\ }\hlslc{\#\ flatten\ cost\ array\ and\ append\ zeros\ to\ simplex\ table\ length}\\
+\hllin{561\ }\hlstd{}\hlslc{\#\ ({-}1\ coz\ first\ item\ is\ empty)}\\
+\hllin{562\ }\hlstd{cost\textunderscore flat\ }\hlopt{=\ }\hlstd{}\hlkwb{list}\hlstd{}\hlopt{(}\hlstd{np}\hlopt{.}\hlstd{}\hlkwd{array}\hlstd{}\hlopt{(}\hlstd{cost}\hlopt{).}\hlstd{}\hlkwd{flatten}\hlstd{}\hlopt{())}\\
+\hllin{563\ }\hlstd{cost\textunderscore flat\ }\hlopt{=\ {[}}\hlstd{}\hlstr{''}\hlstd{}\hlopt{{]}\ +\ }\hlstd{cost\textunderscore flat\ }\hlopt{+\ {[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}{*}((}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore idx}\hlopt{)+}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{not\textunderscore basis\textunderscore idx}\hlopt{))}\Righttorque\\
+\hllin{564\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{{-}}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{cost\textunderscore flat}\hlopt{){-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{)}\\
+\hllin{565\ }\hlstd{}\\
+\hllin{566\ }\hlslc{\#\#\#\#}\\
+\hllin{567\ }\hlstd{}\hlslc{\#\ Fill\ simplex\ table\ with\ values\ from\ conversion\ table\ if\ x\ is\ not\ in\ }\Righttorque\\
+\hllin{568\ }\hlslc{basis}\\
+\hllin{569\ }\hlstd{}\hlslc{\#\ if\ x\ in\ basis\ so\ 1\ at\ cross,\ 0\ others}\\
+\hllin{570\ }\hlstd{}\hlslc{\#\#\#\#}\\
+\hllin{571\ }\hlstd{curr\textunderscore sol\ }\hlopt{=\ }\hlstd{}\hlnum{0}\\
+\hllin{572\ }\hlstd{}\hlkwa{for\ }\hlstd{idx\ }\hlkwa{in\ }\hlstd{}\hlkwb{range}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{wided\textunderscore table}\hlopt{{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]})):}\\
+\hllin{573\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{idx\ }\hlkwa{in\ }\hlstd{basis\textunderscore idx}\hlopt{:}\\
+\hllin{574\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{simplex\textunderscore tbl}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\\
+\hllin{575\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{{[}}\hlstd{}\hlnum{1\ }\hlstd{}\hlkwa{if\ }\hlstd{i\ }\hlopt{==\ }\hlstd{basis\textunderscore idx}\hlopt{.}\hlstd{}\hlkwd{index}\hlstd{}\hlopt{(}\hlstd{idx}\hlopt{)\ }\hlstd{}\hlkwa{else\ }\hlstd{}\hlnum{0\ }\hlstd{}\hlkwa{for\ }\hlstd{i\ }\hlkwa{in\ }\hlstd{}\hlkwb{range}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\Righttorque\\
+\hllin{576\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{basis\textunderscore idx}\hlopt{)){]}\ +\ {[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}}\\
+\hllin{577\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlopt{)}\\
+\hllin{578\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{else}\hlstd{}\hlopt{:}\\
+\hllin{579\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{simplex\textunderscore tbl}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\hlstd{conversion\textunderscore tbl}\hlopt{{[}}\hlstd{curr\textunderscore sol}\hlopt{{]}\ +\ {[}}\hlstd{cost\textunderscore flat}\hlopt{{[}}\hlstd{idx}\hlopt{{]}{]})}\\
+\hllin{580\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{curr\textunderscore sol\ }\hlopt{+=\ }\hlstd{}\hlnum{1}\\
+\hllin{581\ }\hlstd{\\
+\hllin{582\ }basis\textunderscore left\textunderscore col\ }\hlopt{=\ {[}{]}}\\
+\hllin{583\ }\hlstd{}\hlkwa{for\ }\hlstd{item\ }\hlkwa{in\ }\hlstd{basis\textunderscore idx}\hlopt{:}\\
+\hllin{584\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{basis\textunderscore left\textunderscore col}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{float}\hlstd{}\hlopt{(}\hlstd{cost\textunderscore flat}\hlopt{{[}}\hlstd{item}\hlopt{{]}))}\\
+\hllin{585\ }\hlstd{\\
+\hllin{586\ }simplex\textunderscore tbl\ }\hlopt{=\ }\hlstd{}\hlkwb{list}\hlstd{}\hlopt{(}\hlstd{np}\hlopt{.}\hlstd{}\hlkwd{array}\hlstd{}\hlopt{(}\hlstd{simplex\textunderscore tbl}\hlopt{).}\hlstd{}\hlkwd{transpose}\hlstd{}\hlopt{())}\\
+\hllin{587\ }\hlstd{simplex\textunderscore tbl\ }\hlopt{=\ {[}}\hlstd{}\hlkwb{list}\hlstd{}\hlopt{(}\hlstd{item}\hlopt{)\ }\hlstd{}\hlkwa{for\ }\hlstd{item\ }\hlkwa{in\ }\hlstd{simplex\textunderscore tbl}\hlopt{{]}}\\
+\hllin{588\ }\hlstd{\\
+\hllin{589\ }simplex\textunderscore tbl\ }\hlopt{=\ {[}}\hlstd{cost\textunderscore flat}\hlopt{{]}\ +\ }\hlstd{simplex\textunderscore tbl}\\
+\hllin{590\ }\\
+\hllin{591\ }\hlkwa{for\ }\hlstd{row\textunderscore idx}\hlopt{,}\hlstd{row\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{simplex\textunderscore tbl}\hlopt{):}\\
+\hllin{592\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{item\textunderscore idx}\hlopt{,}\hlstd{item\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{row}\hlopt{):}\\
+\hllin{593\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{simplex\textunderscore tbl}\hlopt{{[}}\hlstd{row\textunderscore idx}\hlopt{{]}{[}}\hlstd{item\textunderscore idx}\hlopt{{]}\ =\ }\hlstd{}\hlkwb{float}\hlstd{}\hlopt{(}\hlstd{item}\hlopt{)\ }\hlstd{}\hlkwa{if\ }\hlstd{item\ }\hlopt{!=\ }\hlstd{}\hlstr{''}\hlstd{\ \Righttorque\\
+\hllin{594\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{else\ }\hlstd{}\hlstr{''}\hlstd{\\
+\hllin{595\ }\\
+\hllin{596\ }init\textunderscore target\textunderscore func\ }\hlopt{=\ }\hlstd{}\hlnum{0}\\
+\hllin{597\ }\hlstd{}\hlkwa{for\ }\hlstd{item\textunderscore idx}\hlopt{,}\hlstd{item\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{simplex\textunderscore tbl}\hlopt{):}\\
+\hllin{598\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{item\textunderscore idx\ }\hlopt{!=\ }\hlstd{}\hlnum{0\ }\hlstd{}\hlkwa{and\ }\hlstd{item\textunderscore idx\ }\hlopt{!=\ }\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{simplex\textunderscore tbl}\hlopt{){-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{:}\\
+\hllin{599\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{init\textunderscore target\textunderscore func\ }\hlopt{+=\ }\hlstd{}\hlkwb{float}\hlstd{}\hlopt{(}\hlstd{item}\hlopt{{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}){*}}\hlstd{}\hlkwb{float}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore left\textunderscore col}\hlopt{{[}}\Righttorque\\
+\hllin{600\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{item\textunderscore idx}\hlopt{{-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]})}\\
+\hllin{601\ }\hlstd{\\
+\hllin{602\ }\\
+\hllin{603\ }simplex\textunderscore tbl}\hlopt{{[}}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{simplex\textunderscore tbl}\hlopt{){-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}\ =\ }\hlstd{init\textunderscore target\textunderscore func\\
+\hllin{604\ }\\
+\hllin{605\ }direction\textunderscore col\ }\hlopt{=\ {-}}\hlstd{}\hlnum{1}\\
+\hllin{606\ }\hlstd{direction\textunderscore row\ }\hlopt{=\ {-}}\hlstd{}\hlnum{1}\\
+\hllin{607\ }\hlstd{}\\
+\hllin{608\ }\hlslc{\#\ havePositive\ =\ False}\\
+\hllin{609\ }\hlstd{SUCCESS\ }\hlopt{=\ }\hlstd{}\hlkwa{False}\\
+\hllin{610\ }\hlstd{iteration\ }\hlopt{=\ }\hlstd{}\hlnum{1}\\
+\hllin{611\ }\hlstd{}\hlkwa{while\ }\hlstd{iteration\ }\hlopt{\usebox{\hlboxlessthan}\ }\hlstd{MAX\textunderscore ITERATIONS\ }\hlopt{+\ }\hlstd{}\hlnum{1}\hlstd{}\hlopt{:}\\
+\hllin{612\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}\\
+\hllin{613\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\#\ find\ direction\ col\ and\ row}\\
+\hllin{614\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{min\textunderscore col\textunderscore val\ }\hlopt{=\ }\hlstd{}\hlkwb{float}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'NaN'}\hlstd{}\hlopt{)}\\
+\hllin{615\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{item\textunderscore idx}\hlopt{,}\hlstd{item\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{simplex\textunderscore tbl}\hlopt{{[}{-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}):}\\
+\hllin{616\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{item\textunderscore idx\ }\hlopt{!=\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{:}\\
+\hllin{617\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{}\hlkwb{float}\hlstd{}\hlopt{(}\hlstd{item}\hlopt{)\ \usebox{\hlboxgreaterthan}\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{:}\\
+\hllin{618\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ not\ }\hlstd{item\ }\hlopt{\usebox{\hlboxlessthan}\ }\hlstd{min\textunderscore col\textunderscore val}\hlopt{:}\\
+\hllin{619\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{min\textunderscore col\textunderscore val\ }\hlopt{=\ }\hlstd{item\\
+\hllin{620\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{direction\textunderscore col\ }\hlopt{=\ }\hlstd{item\textunderscore idx\\
+\hllin{621\ }\\
+\hllin{622\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{math}\hlopt{.}\hlstd{}\hlkwd{isnan}\hlstd{}\hlopt{(}\hlstd{min\textunderscore col\textunderscore val}\hlopt{):}\\
+\hllin{623\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{direction\textunderscore row\ }\hlopt{=\ }\hlstd{}\hlnum{0}\\
+\hllin{624\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{direction\textunderscore col\ }\hlopt{=\ }\hlstd{}\hlnum{0}\\
+\hllin{625\ }\hlstd{\\
+\hllin{626\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{direction\textunderscore col\ }\hlopt{!=\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{:}\\
+\hllin{627\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{min\textunderscore row\textunderscore val\ }\hlopt{=\ }\hlstd{}\hlkwb{float}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'inf'}\hlstd{}\hlopt{)}\\
+\hllin{628\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{item\textunderscore idx}\hlopt{,\ }\hlstd{item\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{simplex\textunderscore tbl}\hlopt{):}\\
+\hllin{629\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{item\textunderscore idx\ }\hlopt{!=\ }\hlstd{}\hlnum{0\ }\hlstd{}\hlkwa{and\ }\hlstd{item\textunderscore idx\ }\hlopt{!=\ }\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{simplex\textunderscore tbl}\hlopt{){-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{:}\\
+\hllin{630\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{simplex\textunderscore tbl}\hlopt{{[}}\hlstd{item\textunderscore idx}\hlopt{{]}{[}}\hlstd{direction\textunderscore col}\hlopt{{]}\ \usebox{\hlboxgreaterthan}\ }\hlstd{}\hlnum{0.0}\hlstd{}\hlopt{:}\\
+\hllin{631\ }\hlstd{\\
+\hllin{632\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{divided\ }\hlopt{=\ }\hlstd{simplex\textunderscore tbl}\hlopt{{[}}\hlstd{item\textunderscore idx}\hlopt{{]}{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}\ /\ }\hlstd{simplex\textunderscore tbl}\hlopt{{[}}\Righttorque\\
+\hllin{633\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{item\textunderscore idx}\hlopt{{]}{[}}\hlstd{direction\textunderscore col}\hlopt{{]}}\\
+\hllin{634\ }\hlstd{\\
+\hllin{635\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{divided\ }\hlopt{\usebox{\hlboxlessthan}\ }\hlstd{min\textunderscore row\textunderscore val}\hlopt{:}\\
+\hllin{636\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{min\textunderscore row\textunderscore val\ }\hlopt{=\ }\hlstd{divided\\
+\hllin{637\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{direction\textunderscore row\ }\hlopt{=\ }\hlstd{item\textunderscore idx\\
+\hllin{638\ }\\
+\hllin{639\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{direction\textunderscore col\ }\hlopt{!=\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{:}\\
+\hllin{640\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{havePositive\ }\hlopt{=\ }\hlstd{}\hlkwa{False}\\
+\hllin{641\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{row\ }\hlkwa{in\ }\hlstd{simplex\textunderscore tbl}\hlopt{:}\\
+\hllin{642\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{row}\hlopt{{[}}\hlstd{direction\textunderscore col}\hlopt{{]}\ \usebox{\hlboxgreaterthan}\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{:}\\
+\hllin{643\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{havePositive\ }\hlopt{=\ }\hlstd{}\hlkwa{True}\\
+\hllin{644\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{break}\\
+\hllin{645\ }\hlstd{\\
+\hllin{646\ }}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}\\
+\hllin{647\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\#\ make\ visual\ representation\ of\ simplex\ table}\\
+\hllin{648\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{simplex\textunderscore tbl\textunderscore visible\ }\hlopt{=\ {[}{]}}\\
+\hllin{649\ }\hlstd{\\
+\hllin{650\ }}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\#\ first\ row}\\
+\hllin{651\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{simplex\textunderscore tbl\textunderscore visible}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{({[}}\hlstd{}\hlstr{'\$c\$'}\hlstd{}\hlopt{,}\hlstd{}\hlstr{''}\hlstd{}\hlopt{{]})}\\
+\hllin{652\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{simplex\textunderscore tbl\textunderscore visible}\hlopt{{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}\ +=\ {[}}\hlstd{}\hlstr{'\$'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{item}\hlopt{)\ +\ }\hlstd{}\hlstr{'\$'}\hlstd{\ }\hlkwa{if\ }\hlstd{item\ }\hlopt{!=\ }\hlstd{}\hlstr{''}\hlstd{\ \Righttorque\\
+\hllin{653\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{else\ }\hlstd{}\hlstr{''}\hlstd{\ }\hlkwa{for\ }\hlstd{item\ }\hlkwa{in\ }\hlstd{simplex\textunderscore tbl}\hlopt{{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}{]}}\\
+\hllin{654\ }\hlstd{\\
+\hllin{655\ }}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\#\ second\ row}\\
+\hllin{656\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{simplex\textunderscore tbl\textunderscore visible}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{({[}}\hlstd{}\hlstr{''}\hlstd{}\hlopt{,}\hlstd{}\hlstr{'\$B\textunderscore x\$'}\hlstd{}\hlopt{,}\hlstd{}\hlstr{'\$a\textunderscore \usebox{\hlboxopenbrace}i0\usebox{\hlboxclosebrace}\$'}\hlstd{}\hlopt{{]})}\\
+\hllin{657\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{i\ }\hlkwa{in\ }\hlstd{}\hlkwb{range}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{simplex\textunderscore tbl}\hlopt{{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}){-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{):}\\
+\hllin{658\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{i\ }\hlopt{==\ }\hlstd{direction\textunderscore col}\hlopt{{-}}\hlstd{}\hlnum{1\ }\hlstd{}\hlkwa{and\ }\hlstd{direction\textunderscore col\ }\hlopt{!=\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{:}\\
+\hllin{659\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{simplex\textunderscore tbl\textunderscore visible}\hlopt{{[}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'\$}\hlesc{$\backslash$$\backslash$}\hlstr{mathbf\usebox{\hlboxopenbrace}A\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{}\hlopt{+}\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{i}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{)+}\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}}\Righttorque\\
+\hllin{660\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{\$'}\hlstd{}\hlopt{)}\\
+\hllin{661\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{else}\hlstd{}\hlopt{:}\\
+\hllin{662\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{simplex\textunderscore tbl\textunderscore visible}\hlopt{{[}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'\$A\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{}\hlopt{+}\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{i}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{)+}\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\$'}\hlstd{}\hlopt{)}\\
+\hllin{663\ }\hlstd{\\
+\hllin{664\ }}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\#\ body\ of\ table}\\
+\hllin{665\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{idx\ }\hlkwa{in\ }\hlstd{}\hlkwb{range}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{simplex\textunderscore tbl}\hlopt{)):}\\
+\hllin{666\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{idx\ }\hlopt{!=\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{:}\\
+\hllin{667\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{idx\ }\hlopt{==\ }\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{simplex\textunderscore tbl}\hlopt{){-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{:}\\
+\hllin{668\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{simplex\textunderscore tbl\textunderscore visible}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\\
+\hllin{669\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{{[}}\hlstd{}\hlstr{''}\hlstd{}\hlopt{,}\hlstd{}\hlstr{'\$}\hlesc{$\backslash$$\backslash$}\hlstr{Delta\$'}\hlstd{}\hlopt{{]}\ +}\hlstd{$\backslash$\\
+\hllin{670\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{{[}}\hlstd{}\hlstr{'\$'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{item}\hlopt{)\ +\ }\hlstd{}\hlstr{'\$'}\hlstd{\ }\hlkwa{for\ }\hlstd{item\ }\hlkwa{in\ }\hlstd{simplex\textunderscore tbl}\hlopt{{[}}\hlstd{idx}\hlopt{{]}}\Righttorque\\
+\hllin{671\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{{]}}\\
+\hllin{672\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{)}\\
+\hllin{673\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{else}\hlstd{}\hlopt{:}\\
+\hllin{674\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{idx\ }\hlopt{==\ }\hlstd{direction\textunderscore row\ }\hlkwa{and\ }\hlstd{direction\textunderscore row\ }\hlopt{!=\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{:}\\
+\hllin{675\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{simplex\textunderscore tbl\textunderscore visible}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\\
+\hllin{676\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{{[}}\hlstd{}\hlstr{'\$'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore left\textunderscore col}\hlopt{{[}}\hlstd{idx}\hlopt{{-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]})\ +\ }\hlstd{}\hlstr{'\$'}\hlstd{\ }\hlopt{,}\\
+\hllin{677\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlstr{'\$}\hlesc{$\backslash$$\backslash$}\hlstr{mathbf\usebox{\hlboxopenbrace}x\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{}\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore idx}\hlopt{{[}}\hlstd{idx}\hlopt{{-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]})\ +}\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}\$'}\hlstd{}\hlopt{{]}\ }\Righttorque\\
+\hllin{678\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{+}\hlstd{$\backslash$\\
+\hllin{679\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{{[}}\hlstd{}\hlstr{'\$}\hlesc{$\backslash$$\backslash$}\hlstr{mathbf\usebox{\hlboxopenbrace}'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{item}\hlopt{)\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\$'}\hlstd{\ }\hlkwa{if\ }\hlstd{item\textunderscore idx\ \Righttorque\\
+\hllin{680\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{==\ }\hlstd{direction\textunderscore col\ }\hlkwa{else\ }\hlstd{}\hlstr{'\$'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\Righttorque\\
+\hllin{681\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{item}\hlopt{)\ +\ }\hlstd{}\hlstr{'\$'}\hlstd{\ }\hlkwa{for\ }\hlstd{item\textunderscore idx}\hlopt{,}\hlstd{item\ }\hlkwa{in\ }\Righttorque\\
+\hllin{682\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{simplex\textunderscore tbl}\hlopt{{[}}\hlstd{idx}\hlopt{{]}){]}}\\
+\hllin{683\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{)}\\
+\hllin{684\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{else}\hlstd{}\hlopt{:}\\
+\hllin{685\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{simplex\textunderscore tbl\textunderscore visible}\hlopt{.}\hlstd{}\hlkwd{append}\hlstd{}\hlopt{(}\\
+\hllin{686\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{{[}}\hlstd{basis\textunderscore left\textunderscore col}\hlopt{{[}}\hlstd{idx}\hlopt{{-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\ ,}\hlstd{}\hlstr{'\$x\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{}\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{basis\textunderscore idx}\hlopt{{[}}\Righttorque\\
+\hllin{687\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{idx}\hlopt{{-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]})\ +}\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\$'}\hlstd{}\hlopt{{]}\ +}\Righttorque\\
+\hllin{688\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{$\backslash$\\
+\hllin{689\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{{[}}\hlstd{}\hlstr{'\$'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{item}\hlopt{)\ +\ }\hlstd{}\hlstr{'\$'}\hlstd{\ }\hlkwa{for\ }\hlstd{item\ }\hlkwa{in\ }\hlstd{simplex\textunderscore tbl}\hlopt{{[}}\Righttorque\\
+\hllin{690\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{idx}\hlopt{{]}{]}}\\
+\hllin{691\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{)}\\
+\hllin{692\ }\hlstd{\\
+\hllin{693\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{begin\usebox{\hlboxopenbrace}landscape\usebox{\hlboxclosebrace}'}\hlstd{}\hlopt{)}\\
+\hllin{694\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{subsubsection\usebox{\hlboxopenbrace}Шаг\ '}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{iteration}\hlopt{)\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}'}\hlstd{}\hlopt{)}\\
+\hllin{695\ }\hlstd{\\
+\hllin{696\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{writetbl}\hlstd{}\hlopt{(}\hlstd{simplex\textunderscore tbl\textunderscore visible}\hlopt{,}\hlstd{debug}\hlopt{=}\hlstd{}\hlkwa{True}\hlstd{}\hlopt{)}\\
+\hllin{697\ }\hlstd{\\
+\hllin{698\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{direction\textunderscore col\ }\hlopt{!=\ }\hlstd{}\hlnum{0\ }\hlstd{}\hlkwa{and\ }\hlstd{direction\textunderscore row\ }\hlopt{!=\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{:}\\
+\hllin{699\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'Направляющий\ столбец:\ '}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\Righttorque\\
+\hllin{700\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{direction\textunderscore col}\hlopt{))}\\
+\hllin{701\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'Направляющая\ строка:\ '}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\Righttorque\\
+\hllin{702\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{direction\textunderscore row}\hlopt{))}\\
+\hllin{703\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'Разрешающий\ элемент:\ '}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\Righttorque\\
+\hllin{704\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{simplex\textunderscore tbl}\hlopt{{[}}\hlstd{direction\textunderscore row}\hlopt{{]}{[}}\hlstd{direction\textunderscore col}\hlopt{{]}))}\\
+\hllin{705\ }\hlstd{\\
+\hllin{706\ }\\
+\hllin{707\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{end\usebox{\hlboxopenbrace}landscape\usebox{\hlboxclosebrace}'}\hlstd{}\hlopt{)}\\
+\hllin{708\ }\hlstd{\\
+\hllin{709\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{if\ not\ }\hlstd{havePositive}\hlopt{:}\\
+\hllin{710\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{SUCCESS\ }\hlopt{=\ }\hlstd{}\hlkwa{False}\\
+\hllin{711\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{break}\\
+\hllin{712\ }\hlstd{\\
+\hllin{713\ }}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{math}\hlopt{.}\hlstd{}\hlkwd{isnan}\hlstd{}\hlopt{(}\hlstd{min\textunderscore col\textunderscore val}\hlopt{):}\\
+\hllin{714\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{target\textunderscore func\ }\hlopt{=\ }\hlstd{}\hlnum{0}\\
+\hllin{715\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{idx\ }\hlkwa{in\ }\hlstd{}\hlkwb{range}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{simplex\textunderscore tbl}\hlopt{){-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{):}\\
+\hllin{716\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{idx\ }\hlopt{!=\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{:}\\
+\hllin{717\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{target\textunderscore func\ }\hlopt{+=\ }\hlstd{simplex\textunderscore tbl}\hlopt{{[}}\hlstd{idx}\hlopt{{]}{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}{*}}\hlstd{basis\textunderscore left\textunderscore col}\hlopt{{[}}\hlstd{idx}\hlopt{{-}}\Righttorque\\
+\hllin{718\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}}\\
+\hllin{719\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{simplex\textunderscore tbl}\hlopt{{[}}\hlstd{row\textunderscore idx}\hlopt{{]}{[}}\hlstd{item\textunderscore idx}\hlopt{{]}\ =\ }\hlstd{target\textunderscore func\\
+\hllin{720\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{SUCCESS\ }\hlopt{=\ }\hlstd{}\hlkwa{True}\\
+\hllin{721\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{break}\\
+\hllin{722\ }\hlstd{\\
+\hllin{723\ }}\hlstd{\ \ \ \ }\hlstd{new\textunderscore simplex\textunderscore tbl\ }\hlopt{=\ }\hlstd{copy}\hlopt{.}\hlstd{}\hlkwd{deepcopy}\hlstd{}\hlopt{(}\hlstd{simplex\textunderscore tbl}\hlopt{)}\\
+\hllin{724\ }\hlstd{\\
+\hllin{725\ }}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\#\ recount}\\
+\hllin{726\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{row\textunderscore idx}\hlopt{,}\hlstd{row\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{simplex\textunderscore tbl}\hlopt{):}\\
+\hllin{727\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\#\ first\ row,\ restrictions}\\
+\hllin{728\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{row\textunderscore idx\ }\hlopt{==\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{:}\\
+\hllin{729\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{continue}\\
+\hllin{730\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{item\textunderscore idx}\hlopt{,}\hlstd{item\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{row}\hlopt{):}\\
+\hllin{731\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{row\textunderscore idx\ }\hlopt{==\ }\hlstd{direction\textunderscore row}\hlopt{:}\\
+\hllin{732\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{item\textunderscore idx\ }\hlopt{==\ }\hlstd{direction\textunderscore col}\hlopt{:}\\
+\hllin{733\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{new\textunderscore simplex\textunderscore tbl}\hlopt{{[}}\hlstd{row\textunderscore idx}\hlopt{{]}{[}}\hlstd{item\textunderscore idx}\hlopt{{]}\ =\ }\hlstd{}\hlnum{1}\\
+\hllin{734\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{divided\ }\hlopt{=\ }\hlstd{}\hlkwb{float}\hlstd{}\hlopt{(}\hlstd{np}\hlopt{.}\hlstd{}\hlkwd{divide}\hlstd{}\hlopt{(}\\
+\hllin{735\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{simplex\textunderscore tbl}\hlopt{{[}}\hlstd{row\textunderscore idx}\hlopt{{]}{[}}\hlstd{item\textunderscore idx}\hlopt{{]},}\\
+\hllin{736\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{simplex\textunderscore tbl}\hlopt{{[}}\hlstd{direction\textunderscore row}\hlopt{{]}{[}}\hlstd{direction\textunderscore col}\hlopt{{]}}\\
+\hllin{737\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{))}\\
+\hllin{738\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{divided\ }\hlopt{==\ }\hlstd{}\hlkwb{float}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'nan'}\hlstd{}\hlopt{)\ }\hlstd{}\hlkwa{or\ }\hlstd{math}\hlopt{.}\hlstd{}\hlkwd{fabs}\hlstd{}\hlopt{(}\hlstd{divided}\hlopt{)\ ==\ }\Righttorque\\
+\hllin{739\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwb{float}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'inf'}\hlstd{}\hlopt{):}\\
+\hllin{740\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{new\textunderscore simplex\textunderscore tbl}\hlopt{{[}}\hlstd{row\textunderscore idx}\hlopt{{]}{[}}\hlstd{item\textunderscore idx}\hlopt{{]}\ =\ }\hlstd{}\hlnum{0}\\
+\hllin{741\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{else}\hlstd{}\hlopt{:}\\
+\hllin{742\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{new\textunderscore simplex\textunderscore tbl}\hlopt{{[}}\hlstd{row\textunderscore idx}\hlopt{{]}{[}}\hlstd{item\textunderscore idx}\hlopt{{]}\ =\ }\hlstd{}\hlkwb{round}\hlstd{}\hlopt{(}\hlstd{divided}\hlopt{,}\Righttorque\\
+\hllin{743\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{ROUND\textunderscore ACCURACY\Righttorque\\
+\hllin{744\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{)}\\
+\hllin{745\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{continue}\\
+\hllin{746\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{item\textunderscore idx\ }\hlopt{==\ }\hlstd{direction\textunderscore col}\hlopt{:}\\
+\hllin{747\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{new\textunderscore simplex\textunderscore tbl}\hlopt{{[}}\hlstd{row\textunderscore idx}\hlopt{{]}{[}}\hlstd{item\textunderscore idx}\hlopt{{]}\ =\ }\hlstd{}\hlnum{0}\\
+\hllin{748\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{new\textunderscore simplex\textunderscore tbl}\hlopt{{[}}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{new\textunderscore simplex\textunderscore tbl}\hlopt{){-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}{[}}\hlstd{item\textunderscore idx}\hlopt{{]}\ =\ }\hlstd{}\hlnum{0}\\
+\hllin{749\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{continue}\\
+\hllin{750\ }\hlstd{\\
+\hllin{751\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{divided\ }\hlopt{=\ }\hlstd{}\hlkwb{float}\hlstd{}\hlopt{(}\hlstd{np}\hlopt{.}\hlstd{}\hlkwd{divide}\hlstd{}\hlopt{(}\\
+\hllin{752\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{simplex\textunderscore tbl}\hlopt{{[}}\hlstd{direction\textunderscore row}\hlopt{{]}{[}}\hlstd{item\textunderscore idx}\hlopt{{]},}\\
+\hllin{753\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{simplex\textunderscore tbl}\hlopt{{[}}\hlstd{direction\textunderscore row}\hlopt{{]}{[}}\hlstd{direction\textunderscore col}\hlopt{{]}}\\
+\hllin{754\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{))}\\
+\hllin{755\ }\hlstd{\\
+\hllin{756\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{divided\ }\hlopt{==\ }\hlstd{}\hlkwb{float}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'nan'}\hlstd{}\hlopt{)\ }\hlstd{}\hlkwa{or\ }\hlstd{math}\hlopt{.}\hlstd{}\hlkwd{fabs}\hlstd{}\hlopt{(}\hlstd{divided}\hlopt{)\ ==\ }\hlstd{}\hlkwb{float}\hlstd{}\hlopt{(}\Righttorque\\
+\hllin{757\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlstr{'inf'}\hlstd{}\hlopt{):}\\
+\hllin{758\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{new\textunderscore simplex\textunderscore tbl}\hlopt{{[}}\hlstd{row\textunderscore idx}\hlopt{{]}{[}}\hlstd{item\textunderscore idx}\hlopt{{]}\ =\ }\hlstd{}\hlkwb{round}\hlstd{}\hlopt{(}\hlstd{item}\hlopt{,}\Righttorque\\
+\hllin{759\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{ROUND\textunderscore ACCURACY}\hlopt{)}\\
+\hllin{760\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{else}\hlstd{}\hlopt{:}\\
+\hllin{761\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{new\textunderscore simplex\textunderscore tbl}\hlopt{{[}}\hlstd{row\textunderscore idx}\hlopt{{]}{[}}\hlstd{item\textunderscore idx}\hlopt{{]}\ =\ }\hlstd{}\hlkwb{round}\hlstd{}\hlopt{(}\\
+\hllin{762\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{item\ }\hlopt{{-}\ (}\hlstd{simplex\textunderscore tbl}\hlopt{{[}}\hlstd{row\textunderscore idx}\hlopt{{]}{[}}\hlstd{direction\textunderscore col}\hlopt{{]}}\Righttorque\\
+\hllin{763\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{{*}}\hlstd{divided}\hlopt{),}\\
+\hllin{764\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{ROUND\textunderscore ACCURACY\\
+\hllin{765\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlopt{)}\\
+\hllin{766\ }\hlstd{\\
+\hllin{767\ }}\hlstd{\ \ \ \ }\hlstd{basis\textunderscore left\textunderscore col}\hlopt{{[}}\hlstd{direction\textunderscore row}\hlopt{{-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\ =\ }\hlstd{cost\textunderscore flat}\hlopt{{[}}\hlstd{direction\textunderscore col}\hlopt{{]}}\\
+\hllin{768\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{basis\textunderscore idx}\hlopt{{[}}\hlstd{direction\textunderscore row}\hlopt{{-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\ =\ }\hlstd{direction\textunderscore col\\
+\hllin{769\ }\\
+\hllin{770\ }}\hlstd{\ \ \ \ }\hlstd{target\textunderscore func\ }\hlopt{=\ }\hlstd{}\hlnum{0}\\
+\hllin{771\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{idx\ }\hlkwa{in\ }\hlstd{}\hlkwb{range}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{simplex\textunderscore tbl}\hlopt{){-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{):}\\
+\hllin{772\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{idx\ }\hlopt{!=\ }\hlstd{}\hlnum{0}\hlstd{}\hlopt{:}\\
+\hllin{773\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{target\textunderscore func\ }\hlopt{+=\ }\hlstd{new\textunderscore simplex\textunderscore tbl}\hlopt{{[}}\hlstd{idx}\hlopt{{]}{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}{*}}\hlstd{basis\textunderscore left\textunderscore col}\hlopt{{[}}\hlstd{idx}\hlopt{{-}}\Righttorque\\
+\hllin{774\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}}\\
+\hllin{775\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{new\textunderscore simplex\textunderscore tbl}\hlopt{{[}}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{new\textunderscore simplex\textunderscore tbl}\hlopt{){-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}\ =\ }\hlstd{target\textunderscore func\\
+\hllin{776\ }\\
+\hllin{777\ }}\hlstd{\ \ \ \ }\hlstd{simplex\textunderscore tbl\ }\hlopt{=\ }\hlstd{new\textunderscore simplex\textunderscore tbl\\
+\hllin{778\ }\\
+\hllin{779\ }}\hlstd{\ \ \ \ }\hlstd{iteration\ }\hlopt{+=\ }\hlstd{}\hlnum{1}\\
+\hllin{780\ }\hlstd{}\\
+\hllin{781\ }\hlkwa{if\ not\ }\hlstd{SUCCESS}\hlopt{:}\\
+\hllin{782\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{iteration\ }\hlopt{==\ }\hlstd{MAX\textunderscore ITERATIONS}\hlopt{:}\\
+\hllin{783\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'Не\ найдено\ решения\ за\ '}\hlstd{\ }\hlopt{+}\hlstd{$\backslash$\\
+\hllin{784\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{MAX\textunderscore ITERATIONS}\hlopt{)\ +}\hlstd{$\backslash$\\
+\hllin{785\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlstr{'\ шагов.\ Или\ что{-}то\ пошло\ не\ так\ }\Righttorque\\
+\hllin{786\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{или\ надо\ увеличить\ число\ шагов.'}\hlstd{}\hlopt{)}\\
+\hllin{787\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{else}\hlstd{}\hlopt{:}\\
+\hllin{788\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'В\ направляющем\ столбце\ }\Righttorque\\
+\hllin{789\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{нет\ положительных\ }\Righttorque\\
+\hllin{790\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{элементов.\ Это\ значит,\ что\ }\Righttorque\\
+\hllin{791\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{целевая\ функция\ убывает.'}\hlstd{}\hlopt{)}\\
+\hllin{792\ }\hlstd{}\\
+\hllin{793\ }\hlkwa{if\ }\hlstd{SUCCESS}\hlopt{:}\\
+\hllin{794\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{print}\hlstd{}\hlopt{(}\hlstd{}\hlstr{'done'}\hlstd{}\hlopt{)}\\
+\hllin{795\ }\hlstd{\\
+\hllin{796\ }report\textunderscore output}\hlopt{.}\hlstd{}\hlkwd{close}\hlstd{}\hlopt{()}\hlstd{}\\
+\mbox{}
+\normalfont
+\normalsize
+\shorthandon{"}

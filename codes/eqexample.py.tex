@@ -1,0 +1,29 @@
+\ttfamily
+\shorthandoff{"}
+\noindent
+\hlstd{\hllin{\ 1\ }restrictions\ }\hlopt{=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{begin\usebox{\hlboxopenbrace}cases\usebox{\hlboxclosebrace}'}\hlstd{}\\
+\hllin{\ 2\ }\\
+\hllin{\ 3\ }\hlkwa{for\ }\hlstd{row}\hlopt{,\ }\hlstd{value\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{):}\\
+\hllin{\ 4\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{col}\hlopt{,\ }\hlstd{value\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{value}\hlopt{):}\\
+\hllin{\ 5\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{restrictions\ }\hlopt{+=\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{value}\hlopt{)\ +\ }\hlstd{}\hlstr{'x\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{row}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{)\ +\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{col}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{)\ +\ }\Righttorque\\
+\hllin{\ 6\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\ +'}\hlstd{\\
+\hllin{\ 7\ }}\hlstd{\ \ \ \ }\hlstd{restrictions\ }\hlopt{=\ }\hlstd{restrictions}\hlopt{{[}:{-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}}\\
+\hllin{\ 8\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{restrictions\ }\hlopt{+=\ }\hlstd{}\hlstr{'\&$\backslash$geqslant\ '}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{min\textunderscore transit}\hlopt{{[}}\hlstd{row}\hlopt{{]})}\\
+\hllin{\ 9\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{restrictions\ }\hlopt{+=\ }\hlstd{}\hlstr{'\ }\hlesc{$\backslash$$\backslash$$\backslash$$\backslash$\ $\backslash$n$\backslash$t$\backslash$t}\hlstr{'}\hlstd{}\\
+\hllin{10\ }\\
+\hllin{11\ }\hlkwa{for\ }\hlstd{row}\hlopt{,\ }\hlstd{value\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{):}\\
+\hllin{12\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{col}\hlopt{,\ }\hlstd{value\ }\hlkwa{in\ }\hlstd{}\hlkwb{enumerate}\hlstd{}\hlopt{(}\hlstd{value}\hlopt{):}\\
+\hllin{13\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{restrictions\ }\hlopt{+=\ }\hlstd{}\hlstr{'x\textunderscore \usebox{\hlboxopenbrace}'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{col}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{)\ +\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{row}\hlopt{+}\hlstd{}\hlnum{1}\hlstd{}\hlopt{)\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}\ +'}\hlstd{\\
+\hllin{14\ }}\hlstd{\ \ \ \ }\hlstd{restrictions\ }\hlopt{=\ }\hlstd{restrictions}\hlopt{{[}:{-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}}\\
+\hllin{15\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{restrictions\ }\hlopt{+=\ }\hlstd{}\hlstr{'\&=\ '}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{vehicles}\hlopt{{[}}\hlstd{row}\hlopt{{]})}\\
+\hllin{16\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{restrictions\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$$\backslash$$\backslash$\ $\backslash$n$\backslash$t$\backslash$t}\hlstr{'}\hlstd{\\
+\hllin{17\ }\\
+\hllin{18\ }restrictions\ }\hlopt{+=\ }\hlstd{}\hlstr{'x\textunderscore \usebox{\hlboxopenbrace}ij\usebox{\hlboxclosebrace}\ $\backslash$geqslant\ 0,\ (i=1(1)'}\hlstd{}\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{))\ +}\hlstd{}\hlstr{'),\ (}\Righttorque\\
+\hllin{19\ }\hlstr{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstr{j=1(1)'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{tons}\hlopt{{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]}))\ +\ }\hlstd{}\hlstr{')'}\hlstd{\\
+\hllin{20\ }restrictions\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$n$\backslash$t}\hlstr{$\backslash$end\usebox{\hlboxopenbrace}cases\usebox{\hlboxclosebrace}'}\hlstd{}\\
+\hllin{21\ }\\
+\hllin{22\ }\hlkwd{writeeq}\hlstd{}\hlopt{(}\hlstd{restrictions}\hlopt{)}\hlstd{}\\
+\mbox{}
+\normalfont
+\normalsize
+\shorthandon{"}

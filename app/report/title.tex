@@ -1,0 +1,54 @@
+%!TEX root = main.tex
+\begin{titlepage}
+\newpage
+
+\input{info}
+
+\makeatletter
+
+\begin{center}
+Министерство образования и науки Российской Федерации \\
+\university \\
+\vspace{3cm}
+\faculty \\ \dept
+\end{center}
+
+\vspace{3cm}
+
+\begin{center}
+\textbf{\yourTitle} \\
+\vspace{1cm}
+Отчет по лабораторной работе №\workNumber
+\end{center}
+\begin{center}
+по дисциплине \underline{\discipline}
+\end{center}
+
+\vspace{3cm}
+
+\noindent
+\begin{tabular}{
+	l
+	>{\hfill}p{0.05\textwidth}
+	c
+	>{\hfill}p{0.05\textwidth}
+	r
+}
+
+Выполнил\\
+\yourType \ группы \group &&                                                  && \yourName               \\ \cmidrule{1-1} \cmidrule{5-5} \cmidrule{3-3}
+                          && \phantom{MM}\footnotesize{подпись}\phantom{MM}   && \footnotesize{Фамилия И.~О.} \\
+
+Принял\\
+\teacherType                    &&                                                  && \teacher               \\ \cmidrule{1-1} \cmidrule{5-5} \cmidrule{3-3}
+                          && \phantom{MM}\footnotesize{подпись}\phantom{MM}   && \footnotesize{Фамилия И.~О.} \\
+\end{tabular}
+
+\vfill
+
+\begin{center}
+\city \ 
+\onlyyear\today
+\end{center}
+\makeatother
+\end{titlepage}

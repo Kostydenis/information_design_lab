@@ -1,0 +1,16 @@
+\ttfamily
+\shorthandoff{"}
+\noindent
+\hlstd{}\hllin{\ 1\ }\hlkwa{def\ }\hlstd{}\hlkwd{writeeq}\hlstd{}\hlopt{(}\hlstd{eq}\hlopt{,}\hlstd{num}\hlopt{=}\hlstd{}\hlkwa{False}\hlstd{}\hlopt{,}\hlstd{debug}\hlopt{=}\hlstd{}\hlkwa{False}\hlstd{}\hlopt{):}\\
+\hllin{\ 2\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{IS\textunderscore OUTPUT\ }\hlkwa{or\ }\hlstd{debug}\hlopt{:}\\
+\hllin{\ 3\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{vspace\usebox{\hlboxopenbrace}{-}}\hlesc{$\backslash$$\backslash$}\hlstr{baselineskip\usebox{\hlboxclosebrace}'}\hlstd{\\
+\hllin{\ 4\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{begin\usebox{\hlboxopenbrace}align\usebox{\hlboxclosebrace}}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\ }\hlkwa{if\ }\hlstd{num\ }\hlkwa{else\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{begin\usebox{\hlboxopenbrace}align{*}\usebox{\hlboxclosebrace}}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{\ 5\ }\\
+\hllin{\ 6\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{eq\\
+\hllin{\ 7\ }\\
+\hllin{\ 8\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$n$\backslash$$\backslash$}\hlstr{end\usebox{\hlboxopenbrace}align\usebox{\hlboxclosebrace}'}\hlstd{\ }\hlkwa{if\ }\hlstd{num\ }\hlkwa{else\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$n$\backslash$$\backslash$}\hlstr{end\usebox{\hlboxopenbrace}align{*}\usebox{\hlboxclosebrace}'}\hlstd{\\
+\hllin{\ 9\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{output}\hlopt{,}\hlstd{debug}\hlopt{)}\hlstd{}\\
+\mbox{}
+\normalfont
+\normalsize
+\shorthandon{"}

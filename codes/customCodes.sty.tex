@@ -1,0 +1,171 @@
+\ttfamily
+\shorthandoff{"}
+\noindent
+\hlstd{}\hllin{\ 1\ }\hlslc{\%!TEX\ root\ =\ main.tex}\\
+\hllin{\ 2\ }\hlstd{}\hlkwa{$\backslash$ProvidesPackage}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{customCodes}\hlopt{\usebox{\hlboxclosebrace}{[}}\hlstd{}\hlnum{2013}\hlstd{/}\hlnum{01}\hlstd{/}\hlnum{13\ }\hlstd{Custom\ Codes}\hlopt{{]}}\\
+\hllin{\ 3\ }\hlstd{}\hlslc{\%\ {-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}{-}LISTINGS}\\
+\hllin{\ 4\ }\hlstd{}\hlslc{\%\ there\ are\ two\ ways\ to\ include\ listing:}\\
+\hllin{\ 5\ }\hlstd{}\hlslc{\%\ 1.\ \dq{}$\backslash$usepackage\usebox{\hlboxopenbrace}listings\usebox{\hlboxclosebrace}\dq{}}\\
+\hllin{\ 6\ }\hlstd{}\hlslc{\%\ \ \ troubles\ with\ russian\ symbols\ can\ occur}\\
+\hllin{\ 7\ }\hlstd{}\hlslc{\%\ \ \ does\ not\ support\ some\ languages\ like\ CSS}\\
+\hllin{\ 8\ }\hlstd{}\hlslc{\%\ \ \ styles\ are\ missing\ {-}\ under\ construction}\\
+\hllin{\ 9\ }\hlstd{}\\
+\hllin{10\ }\hlslc{\%\ 2.\ stand{-}alone\ program\ \dq{}highlight\dq{}:\ http://www.andre{-}simon.}\Righttorque\\
+\hllin{11\ }\hlslc{de/doku/highlight/en/highlight.php}\\
+\hllin{12\ }\hlstd{}\\
+\hllin{13\ }\hlslc{\%\ \ \ 1.}\\
+\hllin{14\ }\hlstd{}\hlkwa{$\backslash$usepackage}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{listings}\hlopt{\usebox{\hlboxclosebrace}}\\
+\hllin{15\ }\hlstd{}\hlkwa{$\backslash$lstset}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}\ }\hlstd{}\hlslc{\%}\\
+\hllin{16\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{backgroundcolor=}\hlkwa{$\backslash$color}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{gray}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0.5}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{,}\hlstd{\ \ \ }\hlstd{}\hlslc{\%\ choose\ the\ background\ color;}\Righttorque\\
+\hllin{17\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{you\ must\ add\ $\backslash$usepackage\usebox{\hlboxopenbrace}color\usebox{\hlboxclosebrace}\ or\ $\backslash$usepackage\usebox{\hlboxopenbrace}}\Righttorque\\
+\hllin{18\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{xcolor\usebox{\hlboxclosebrace}}\\
+\hllin{19\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{inputencoding=utf8x,\\
+\hllin{20\ }}\hlstd{\ \ \ \ }\hlstd{keepspaces\ =\ true\\
+\hllin{21\ }}\hlstd{\ \ \ \ }\hlstd{extendedchars=false,\\
+\hllin{22\ }}\hlstd{\ \ \ \ }\hlstd{basicstyle=}\hlkwa{$\backslash$footnotesize}\hlstd{,}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\%\ the\ size\ of\ the\ fonts\ that\ are\ }\Righttorque\\
+\hllin{23\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{used\ for\ the\ code}\\
+\hllin{24\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{breakatwhitespace=false,}\hlstd{\ \ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\%\ sets\ if\ automatic\ breaks\ should\ }\Righttorque\\
+\hllin{25\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{only\ happen\ at\ whitespace}\\
+\hllin{26\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{breaklines=true,}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\%\ sets\ automatic\ line\ breaking}\\
+\hllin{27\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{captionpos=t,}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\%\ sets\ the\ caption{-}position\ to\ }\Righttorque\\
+\hllin{28\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{bottom}\\
+\hllin{29\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{commentstyle=}\hlkwa{$\backslash$color}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{green}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{,}\hlstd{\ \ \ \ }\hlstd{}\hlslc{\%\ comment\ style}\\
+\hllin{30\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{deletekeywords=}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{...}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{,}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\%\ if\ you\ want\ to\ delete\ keywords\ }\Righttorque\\
+\hllin{31\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{from\ the\ given\ language}\\
+\hllin{32\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{escapeinside=}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{$\backslash$\%{*}}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{{*})}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{,}\hlstd{\ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\%\ if\ you\ want\ to\ add\ LaTeX\ within\ }\Righttorque\\
+\hllin{33\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{your\ code}\\
+\hllin{34\ }\hlstd{}\hlslc{\%\ \ \ extendedchars=true,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \%\ lets\ you\ use\ non{-}ASCII\ }\Righttorque\\
+\hllin{35\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{characters;\ for\ 8{-}bits\ encodings\ only,\ does\ not\ work\ }\Righttorque\\
+\hllin{36\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{with\ UTF{-}8}\\
+\hllin{37\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{frame=single,}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\%\ adds\ a\ frame\ around\ the\ code}\\
+\hllin{38\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{keepspaces=true,}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\%\ keeps\ spaces\ in\ text,\ useful\ }\Righttorque\\
+\hllin{39\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{for\ keeping\ indentation\ of\ code\ (possibly\ needs\ }\Righttorque\\
+\hllin{40\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{columns=flexible)}\\
+\hllin{41\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{keywordstyle=}\hlkwa{$\backslash$color}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{blue}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{,}\hlstd{\ \ \ \ \ \ \ }\hlstd{}\hlslc{\%\ keyword\ style}\\
+\hllin{42\ }\hlstd{}\hlslc{\%\ \ \ language=Python,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \%\ the\ language\ of\ the\ code}\\
+\hllin{43\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{otherkeywords=}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{{*},...}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{,}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\%\ if\ you\ want\ to\ add\ more\ }\Righttorque\\
+\hllin{44\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{keywords\ to\ the\ set}\\
+\hllin{45\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{numbers=left,}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\%\ where\ to\ put\ the\ line{-}numbers;\ }\Righttorque\\
+\hllin{46\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{possible\ values\ are\ (none,\ left,\ right)}\\
+\hllin{47\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{numbersep=}\hlnum{5}\hlstd{pt,}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\%\ how\ far\ the\ line{-}numbers\ are\ }\Righttorque\\
+\hllin{48\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{from\ the\ code}\\
+\hllin{49\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{numberstyle=}\hlkwa{$\backslash$tiny$\backslash$color}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{gray}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{,\ }\hlslc{\%\ the\ style\ that\ is\ used\ for\ the\ }\Righttorque\\
+\hllin{50\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{line{-}numbers}\\
+\hllin{51\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{rulecolor=}\hlkwa{$\backslash$color}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{black}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{,}\hlstd{\ \ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\%\ if\ not\ set,\ the\ frame{-}color\ may\ }\Righttorque\\
+\hllin{52\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{be\ changed\ on\ line{-}breaks\ within\ not{-}black\ text\ (e.g.\ }\Righttorque\\
+\hllin{53\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{comments\ (green\ here))}\\
+\hllin{54\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{showspaces=false,}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\%\ show\ spaces\ everywhere\ adding\ }\Righttorque\\
+\hllin{55\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{particular\ underscores;\ it\ overrides\ }\Righttorque\\
+\hllin{56\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{'showstringspaces'}\\
+\hllin{57\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{showstringspaces=false,}\hlstd{\ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\%\ underline\ spaces\ within\ strings\ }\Righttorque\\
+\hllin{58\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{only}\\
+\hllin{59\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{showtabs=false,}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\%\ show\ tabs\ within\ strings\ adding\ }\Righttorque\\
+\hllin{60\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{particular\ underscores}\\
+\hllin{61\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{stepnumber=}\hlnum{2}\hlstd{,}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\%\ the\ step\ between\ two\ line{-}}\Righttorque\\
+\hllin{62\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{numbers.\ If\ it's\ 1,\ each\ line\ will\ be\ numbered}\\
+\hllin{63\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{stringstyle=}\hlkwa{$\backslash$color}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{red}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{,}\hlstd{\ \ \ \ \ }\hlstd{}\hlslc{\%\ string\ literal\ style}\\
+\hllin{64\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{tabsize=}\hlnum{2}\hlstd{,}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlslc{\%\ sets\ default\ tabsize\ to\ 2\ }\Righttorque\\
+\hllin{65\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlslc{spaces}\\
+\hllin{66\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{title=}\hlkwa{$\backslash$lstname}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlkwa{}\hlstd{}\hlslc{\%\ show\ the\ filename\ of\ files\ }\Righttorque\\
+\hllin{67\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ }\hlslc{included\ with\ $\backslash$lstinputlisting;\ also\ try\ caption\ instead\ of\ }\Righttorque\\
+\hllin{68\ }\hlslc{}\hlstd{\ \ \ \ \ \ \ \ \ \ }\hlslc{title}\\
+\hllin{69\ }\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\\
+\hllin{70\ }\hlstd{}\hlkwa{$\backslash$renewcommand}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$lstlistingname}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{Листинг}\hlopt{\usebox{\hlboxclosebrace}}\\
+\hllin{71\ }\hlstd{}\\
+\hllin{72\ }\hlslc{\%\ Styles:}\\
+\hllin{73\ }\hlstd{}\hlkwa{$\backslash$lstdefinestyle}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{customc}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\\
+\hllin{74\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{belowcaptionskip=}\hlnum{1}\hlstd{}\hlkwa{$\backslash$baselineskip}\hlstd{,\\
+\hllin{75\ }}\hlstd{\ \ \ \ }\hlstd{breaklines=true,\\
+\hllin{76\ }}\hlstd{\ \ \ \ }\hlstd{frame=L,\\
+\hllin{77\ }}\hlstd{\ \ \ \ }\hlstd{xleftmargin=}\hlkwa{$\backslash$parindent}\hlstd{,\\
+\hllin{78\ }}\hlstd{\ \ \ \ }\hlstd{language=Python,}\\
+\hllin{79\ }\hlslc{\%\ \ \ showstringspaces=false,}\\
+\hllin{80\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{basicstyle=}\hlkwa{$\backslash$footnotesize$\backslash$ttfamily}\hlstd{,\\
+\hllin{81\ }}\hlstd{\ \ \ \ }\hlstd{keywordstyle=}\hlkwa{$\backslash$bfseries$\backslash$color}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{green!}\hlnum{40}\hlstd{!black}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{,\\
+\hllin{82\ }}\hlstd{\ \ \ \ }\hlstd{commentstyle=}\hlkwa{$\backslash$itshape$\backslash$color}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{purple!}\hlnum{40}\hlstd{!black}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{,\\
+\hllin{83\ }}\hlstd{\ \ \ \ }\hlstd{identifierstyle=}\hlkwa{$\backslash$color}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{blue}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{,\\
+\hllin{84\ }}\hlstd{\ \ \ \ }\hlstd{stringstyle=}\hlkwa{$\backslash$color}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{orange}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{,}\\
+\hllin{85\ }\hlopt{\usebox{\hlboxclosebrace}}\\
+\hllin{86\ }\hlstd{}\hlslc{\%\ \ \ end\ 1.}\\
+\hllin{87\ }\hlstd{}\\
+\hllin{88\ }\hlslc{\%\ \ \ 2.}\\
+\hllin{89\ }\hlstd{}\\
+\hllin{90\ }\hlkwa{$\backslash$definecolor}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{lstcodeBG}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{rgb}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0.95}\hlstd{,}\hlnum{0.95}\hlstd{,}\hlnum{0.95}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\\
+\hllin{91\ }\hlstd{}\hlkwa{$\backslash$definecolor}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{lstcodeFR}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{rgb}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0.95}\hlstd{,}\hlnum{0.95}\hlstd{,}\hlnum{0.95}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\\
+\hllin{92\ }\hlstd{}\\
+\hllin{93\ }\hlkwa{$\backslash$newcounter}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{lstcodeN}\hlopt{\usebox{\hlboxclosebrace}{[}}\hlstd{section}\hlopt{{]}}\\
+\hllin{94\ }\hlstd{}\hlkwa{$\backslash$setcounter}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{lstcodeN}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{2}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\\
+\hllin{95\ }\hlstd{}\hlkwa{$\backslash$def$\backslash$thelstcodeN}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$thesection}\hlstd{.}\hlkwa{$\backslash$arabic}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{lstcodeN}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}}\\
+\hllin{96\ }\hlstd{}\\
+\hllin{97\ }\hlkwa{$\backslash$newcommand}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$lstcode}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}{[}}\hlstd{}\hlnum{5}\hlstd{}\hlopt{{]}\usebox{\hlboxopenbrace}}\\
+\hllin{98\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{$\backslash$refstepcounter}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{lstcodeN}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlkwa{$\backslash$label}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{lst:}\hlkwc{\#5}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\\
+\hllin{99\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{$\backslash$vspace}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0.2}\hlstd{cm}\hlopt{\usebox{\hlboxclosebrace}}\\
+\hllin{100\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{Листинг\ }\hlkwa{$\backslash$thelstcodeN\ }\hlstd{{-}{-}{-}\ }\hlkwc{\#4}\\
+\hllin{101\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{$\backslash$vspace}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{{-}}\hlnum{0.2}\hlstd{cm}\hlopt{\usebox{\hlboxclosebrace}}\\
+\hllin{102\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwc{\#3}\\
+\hllin{103\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{$\backslash$setstretch}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwc{\#2}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\\
+\hllin{104\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{$\backslash$begin}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{framed}\hlopt{\usebox{\hlboxclosebrace}}\\
+\hllin{105\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{$\backslash$input}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwc{\#1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\\
+\hllin{106\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{$\backslash$end}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{framed}\hlopt{\usebox{\hlboxclosebrace}}\\
+\hllin{107\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{$\backslash$normalsize}\\
+\hllin{108\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{$\backslash$singlespacing}\\
+\hllin{109\ }\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\\
+\hllin{110\ }\hlstd{}\\
+\hllin{111\ }\\
+\hllin{112\ }\hlslc{\%\ escape\ characters\ DO\ NOT\ EDIT}\\
+\hllin{113\ }\hlstd{}\hlkwa{$\backslash$newsavebox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlboxclosebrace}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{114\ }\hlstd{}\hlkwa{$\backslash$newsavebox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlboxopenbrace}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{115\ }\hlstd{}\hlkwa{$\backslash$newsavebox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlboxbackslash}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{116\ }\hlstd{}\hlkwa{$\backslash$newsavebox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlboxlessthan}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{117\ }\hlstd{}\hlkwa{$\backslash$newsavebox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlboxgreaterthan}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{118\ }\hlstd{}\hlkwa{$\backslash$newsavebox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlboxdollar}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{119\ }\hlstd{}\hlkwa{$\backslash$newsavebox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlboxunderscore}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{120\ }\hlstd{}\hlkwa{$\backslash$newsavebox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlboxand}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{121\ }\hlstd{}\hlkwa{$\backslash$newsavebox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlboxhash}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{122\ }\hlstd{}\hlkwa{$\backslash$newsavebox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlboxat}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{123\ }\hlstd{}\hlkwa{$\backslash$newsavebox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlboxpercent}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{124\ }\hlstd{}\hlkwa{$\backslash$newsavebox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlboxhat}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{125\ }\hlstd{}\hlkwa{$\backslash$newsavebox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlboxsinglequote}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{126\ }\hlstd{}\hlkwa{$\backslash$newsavebox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlboxbacktick}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{127\ }\hlstd{}\\
+\hllin{128\ }\hlkwa{$\backslash$setbox$\backslash$hlboxopenbrace}\hlstd{=}\hlkwa{$\backslash$hbox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$verb}\hlstd{.}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{.}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{129\ }\hlstd{}\hlkwa{$\backslash$setbox$\backslash$hlboxclosebrace}\hlstd{=}\hlkwa{$\backslash$hbox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$verb}\hlstd{.}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{.}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{130\ }\hlstd{}\hlkwa{$\backslash$setbox$\backslash$hlboxlessthan}\hlstd{=}\hlkwa{$\backslash$hbox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$verb}\hlstd{.\usebox{\hlboxlessthan}.}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{131\ }\hlstd{}\hlkwa{$\backslash$setbox$\backslash$hlboxdollar}\hlstd{=}\hlkwa{$\backslash$hbox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$verb}\hlstd{.\$.}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{132\ }\hlstd{}\hlkwa{$\backslash$setbox$\backslash$hlboxunderscore}\hlstd{=}\hlkwa{$\backslash$hbox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$verb}\hlstd{.\textunderscore .}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{133\ }\hlstd{}\hlkwa{$\backslash$setbox$\backslash$hlboxand}\hlstd{=}\hlkwa{$\backslash$hbox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$verb}\hlstd{.\&.}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{134\ }\hlstd{}\hlkwa{$\backslash$setbox$\backslash$hlboxhash}\hlstd{=}\hlkwa{$\backslash$hbox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$verb}\hlstd{.\#.}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{135\ }\hlstd{}\hlkwa{$\backslash$setbox$\backslash$hlboxat}\hlstd{=}\hlkwa{$\backslash$hbox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$verb}\hlstd{.@.}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{136\ }\hlstd{}\hlkwa{$\backslash$setbox$\backslash$hlboxbackslash}\hlstd{=}\hlkwa{$\backslash$hbox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$verb}\hlstd{.$\backslash$.}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{137\ }\hlstd{}\hlkwa{$\backslash$setbox$\backslash$hlboxgreaterthan}\hlstd{=}\hlkwa{$\backslash$hbox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$verb}\hlstd{.\usebox{\hlboxgreaterthan}.}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{138\ }\hlstd{}\hlkwa{$\backslash$setbox$\backslash$hlboxpercent}\hlstd{=}\hlkwa{$\backslash$hbox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$verb}\hlstd{.}\hlslc{\%.\usebox{\hlboxclosebrace}\%}\\
+\hllin{139\ }\hlstd{}\hlkwa{$\backslash$setbox$\backslash$hlboxhat}\hlstd{=}\hlkwa{$\backslash$hbox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$verb}\hlstd{.\textasciicircum .}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{140\ }\hlstd{}\hlkwa{$\backslash$setbox$\backslash$hlboxsinglequote}\hlstd{=}\hlkwa{$\backslash$hbox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$verb}\hlstd{.'.}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{141\ }\hlstd{}\hlkwa{$\backslash$setbox$\backslash$hlboxbacktick}\hlstd{=}\hlkwa{$\backslash$hbox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$verb}\hlstd{.`.}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{142\ }\hlstd{}\hlkwa{$\backslash$setbox$\backslash$hlboxhat}\hlstd{=}\hlkwa{$\backslash$hbox}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$verb}\hlstd{.\textasciicircum .}\hlopt{\usebox{\hlboxclosebrace}}\hlstd{}\hlslc{\%}\\
+\hllin{143\ }\hlstd{}\\
+\hllin{144\ }\hlslc{\%\ XCODE\ preinstalled\ theme\ for\ highlight}\\
+\hllin{145\ }\hlstd{}\hlkwa{$\backslash$newcommand}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlstd}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}{[}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$textcolor}\hlstd{}\hlopt{{[}}\hlstd{rgb}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwc{\#1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}}\\
+\hllin{146\ }\hlstd{}\hlkwa{$\backslash$newcommand}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlnum}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}{[}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$textcolor}\hlstd{}\hlopt{{[}}\hlstd{rgb}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwc{\#1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}}\\
+\hllin{147\ }\hlstd{}\hlkwa{$\backslash$newcommand}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlesc}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}{[}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$textcolor}\hlstd{}\hlopt{{[}}\hlstd{rgb}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0.64}\hlstd{,}\hlnum{0.08}\hlstd{,}\hlnum{0.08}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwc{\#1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}}\\
+\hllin{148\ }\hlstd{}\hlkwa{$\backslash$newcommand}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlstr}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}{[}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$textcolor}\hlstd{}\hlopt{{[}}\hlstd{rgb}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0.64}\hlstd{,}\hlnum{0.08}\hlstd{,}\hlnum{0.08}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwc{\#1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}}\\
+\hllin{149\ }\hlstd{}\hlkwa{$\backslash$newcommand}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlpps}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}{[}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$textcolor}\hlstd{}\hlopt{{[}}\hlstd{rgb}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwc{\#1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}}\\
+\hllin{150\ }\hlstd{}\hlkwa{$\backslash$newcommand}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlslc}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}{[}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$textcolor}\hlstd{}\hlopt{{[}}\hlstd{rgb}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0}\hlstd{,}\hlnum{0.5}\hlstd{,}\hlnum{0}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwc{\#1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}}\\
+\hllin{151\ }\hlstd{}\hlkwa{$\backslash$newcommand}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlcom}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}{[}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$textcolor}\hlstd{}\hlopt{{[}}\hlstd{rgb}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0}\hlstd{,}\hlnum{0.5}\hlstd{,}\hlnum{0}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwc{\#1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}}\\
+\hllin{152\ }\hlstd{}\hlkwa{$\backslash$newcommand}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlppc}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}{[}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$textcolor}\hlstd{}\hlopt{{[}}\hlstd{rgb}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwc{\#1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}}\\
+\hllin{153\ }\hlstd{}\hlkwa{$\backslash$newcommand}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlopt}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}{[}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$textcolor}\hlstd{}\hlopt{{[}}\hlstd{rgb}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwc{\#1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}}\\
+\hllin{154\ }\hlstd{}\hlkwa{$\backslash$newcommand}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlipl}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}{[}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$textcolor}\hlstd{}\hlopt{{[}}\hlstd{rgb}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0.64}\hlstd{,}\hlnum{0.08}\hlstd{,}\hlnum{0.08}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwc{\#1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}}\\
+\hllin{155\ }\hlstd{}\hlkwa{$\backslash$newcommand}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hllin}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}{[}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$textcolor}\hlstd{}\hlopt{{[}}\hlstd{rgb}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0.17}\hlstd{,}\hlnum{0.57}\hlstd{,}\hlnum{0.69}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwc{\#1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}}\\
+\hllin{156\ }\hlstd{}\hlkwa{$\backslash$newcommand}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlkwa}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}{[}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$textcolor}\hlstd{}\hlopt{{[}}\hlstd{rgb}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwc{\#1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}}\\
+\hllin{157\ }\hlstd{}\hlkwa{$\backslash$newcommand}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlkwb}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}{[}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$textcolor}\hlstd{}\hlopt{{[}}\hlstd{rgb}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwc{\#1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}}\\
+\hllin{158\ }\hlstd{}\hlkwa{$\backslash$newcommand}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlkwc}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}{[}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$textcolor}\hlstd{}\hlopt{{[}}\hlstd{rgb}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0.17}\hlstd{,}\hlnum{0.57}\hlstd{,}\hlnum{0.69}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwc{\#1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}}\\
+\hllin{159\ }\hlstd{}\hlkwa{$\backslash$newcommand}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$hlkwd}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}{[}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwa{$\backslash$textcolor}\hlstd{}\hlopt{{[}}\hlstd{rgb}\hlopt{{]}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{,}\hlnum{0}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlkwc{\#1}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxclosebrace}}\\
+\hllin{160\ }\hlstd{}\hlkwa{$\backslash$definecolor}\hlstd{}\hlopt{\usebox{\hlboxopenbrace}}\hlstd{bgcolor}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{gray}\hlopt{\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}}\hlstd{}\hlnum{0.95}\hlstd{}\hlopt{\usebox{\hlboxclosebrace}}\\
+\hllin{161\ }\hlstd{}\hlslc{\%\ \ \ end\ 2.}\\
+\hllin{162\ }\hlstd{}\\
+\hllin{163\ }\\
+\hllin{164\ }\hlkwa{$\backslash$endinput}\hlstd{}\\
+\mbox{}
+\normalfont
+\normalsize
+\shorthandon{"}

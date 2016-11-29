@@ -1,0 +1,27 @@
+\ttfamily
+\shorthandoff{"}
+\noindent
+\hlstd{}\hllin{\ 1\ }\hlkwa{def\ }\hlstd{}\hlkwd{writetbl}\hlstd{}\hlopt{(}\hlstd{t}\hlopt{,\ }\hlstd{caption}\hlopt{=}\hlstd{}\hlstr{''}\hlstd{}\hlopt{,\ }\hlstd{debug}\hlopt{=}\hlstd{}\hlkwa{False}\hlstd{}\hlopt{):}\\
+\hllin{\ 2\ }\hlstd{}\hlstd{\ \ \ \ }\hlstd{}\hlkwa{if\ }\hlstd{IS\textunderscore OUTPUT\ }\hlkwa{or\ }\hlstd{debug}\hlopt{:}\\
+\hllin{\ 3\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{=}\hlstd{\ \ }\hlopt{}\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$}\hlstr{begin\usebox{\hlboxopenbrace}table\usebox{\hlboxclosebrace}{[}H{]}}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{\ 4\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$t$\backslash$$\backslash$}\hlstr{centering}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{\ 5\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$t$\backslash$$\backslash$}\hlstr{normalsize}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{\ 6\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$t$\backslash$$\backslash$}\hlstr{caption\usebox{\hlboxopenbrace}'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{caption}\hlopt{)\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{\ 7\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$t$\backslash$$\backslash$}\hlstr{label\usebox{\hlboxopenbrace}tbl:'}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{printed\textunderscore table\textunderscore no}\hlopt{)\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{\ 8\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{printed\textunderscore table\textunderscore no\ }\hlopt{+=\ }\hlstd{}\hlnum{1}\\
+\hllin{\ 9\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$t$\backslash$$\backslash$}\hlstr{begin\usebox{\hlboxopenbrace}tabular\usebox{\hlboxclosebrace}\usebox{\hlboxopenbrace}\textbar '}\hlstd{\ }\hlopt{+\ }\hlstd{}\hlstr{'c\textbar '}\hlstd{}\hlopt{{*}}\hlstd{}\hlkwb{len}\hlstd{}\hlopt{(}\hlstd{t}\hlopt{{[}}\hlstd{}\hlnum{0}\hlstd{}\hlopt{{]})\ +\ }\hlstd{}\hlstr{'\usebox{\hlboxclosebrace}}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{10\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$t$\backslash$t$\backslash$$\backslash$}\hlstr{hline}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{11\ }\\
+\hllin{12\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{row\ }\hlkwa{in\ }\hlstd{t}\hlopt{:}\\
+\hllin{13\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$t$\backslash$t}\hlstr{'}\hlstd{\\
+\hllin{14\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{}\hlkwa{for\ }\hlstd{item\ }\hlkwa{in\ }\hlstd{row}\hlopt{:}\\
+\hllin{15\ }\hlstd{}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlkwb{str}\hlstd{}\hlopt{(}\hlstd{item}\hlopt{)\ +\ }\hlstd{}\hlstr{'\&'}\hlstd{\\
+\hllin{16\ }}\hlstd{\ \ \ \ \ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{=\ }\hlstd{output}\hlopt{{[}:{-}}\hlstd{}\hlnum{1}\hlstd{}\hlopt{{]}\ +\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$$\backslash$$\backslash$$\backslash$\ $\backslash$$\backslash$}\hlstr{hline}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{17\ }\\
+\hllin{18\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$n$\backslash$$\backslash$}\hlstr{end\usebox{\hlboxopenbrace}tabular\usebox{\hlboxclosebrace}}\hlesc{$\backslash$n}\hlstr{'}\hlstd{\\
+\hllin{19\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{output\ }\hlopt{+=\ }\hlstd{}\hlstr{'}\hlesc{$\backslash$n$\backslash$$\backslash$}\hlstr{end\usebox{\hlboxopenbrace}table\usebox{\hlboxclosebrace}'}\hlstd{\\
+\hllin{20\ }}\hlstd{\ \ \ \ \ \ \ \ }\hlstd{}\hlkwd{report\textunderscore write}\hlstd{}\hlopt{(}\hlstd{output}\hlopt{,}\hlstd{debug}\hlopt{)}\hlstd{}\\
+\mbox{}
+\normalfont
+\normalsize
+\shorthandon{"}
