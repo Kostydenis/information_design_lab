@@ -1,0 +1,18 @@
+%% like a) - 1)
+% \makeatletter
+%     \AddEnumerateCounter{\asbuk}{\@asbuk}{м)}
+% \makeatother
+% \setlist{nolistsep}
+
+\newenvironment{itemize*}
+	{\begin{itemize}[leftmargin=0mm, itemindent=2cm]
+		\vspace{-0.3cm}
+		\setlength{\itemsep}{1pt}
+		\setlength{\parskip}{1pt}}
+	{\end{itemize}}
+\newenvironment{enumerate*}
+	{\begin{enumerate}[leftmargin=0mm, itemindent=2cm]
+		\vspace{-0.3cm}
+		\setlength{\itemsep}{1pt}
+		\setlength{\parskip}{1pt}}
+	{\end{enumerate}}
