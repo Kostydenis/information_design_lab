@@ -110,13 +110,13 @@
 % \setlist{nolistsep}
 
 \newenvironment{itemize*}
-  {\begin{itemize}[leftmargin=0mm, itemindent=2cm]
+  {\begin{itemize}[leftmargin=2cm, itemindent=0cm]
     \vspace{-0.3cm}
     \setlength{\itemsep}{1pt}
     \setlength{\parskip}{1pt}}
   {\end{itemize}}
 \newenvironment{enumerate*}
-  {\begin{enumerate}[leftmargin=0mm, itemindent=2cm]
+  {\begin{enumerate}[leftmargin=2cm, itemindent=0cm]
     \vspace{-0.3cm}
     \setlength{\itemsep}{1pt}
     \setlength{\parskip}{1pt}}
@@ -146,9 +146,10 @@
 % headlines styles
 % use section and subsection
 \titleformat{\section}
-{\clearpage\bfseries\normalsize\centering}
+{\bfseries\normalsize\centering}
 {\thesection}
 {1em}{}
+\preto\section{\clearpage}
 
 \titleformat{\subsection}
 {\normalsize\bfseries}
